@@ -32,6 +32,8 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 ## Tailwind CSS v4 conventions
 
 - Use Tailwind CSS v4 utilities and the existing `src/app/globals.css` as the source of global theme configuration.
+- Import Tailwind with `@import "tailwindcss"`; do not introduce a Tailwind v3-style JavaScript configuration file for this project.
+- Use the v4 `@theme` and CSS custom-property conventions for project design tokens and Tailwind theme values.
 - Define reusable design tokens for colors, typography, status badges, spacing, and breakpoints.
 - Avoid Tailwind classes in separate class-name systems unless an established UI library requires them.
 - Keep headings, paragraph spacing, card proportions, image ratios, and button styles consistent.
@@ -79,6 +81,9 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 ## BetterAuth and JWT integration
 
 - Integrate BetterAuth through its Next.js route handler and MongoDB adapter configuration.
+- Retrieve the BetterAuth session and any required JWT only in server-side Next.js code, such as Server Components, Server Actions, route handlers, or centralized server API helpers.
+- Forward the JWT to the separate Express backend only through a server-created Authorization header; do not expose the raw JWT to browser JavaScript or persist it in local or session storage.
+- Keep token extraction and forwarding in shared server-only auth/API utilities, and clear or avoid token state when a session or request ends.
 - Keep role as `customer`, `technician`, or `admin`; registration must not permit admin selection.
 - Treat phone, area, bio, and profile image as BetterAuth additional fields or the corresponding profile update contract.
 - Share session and role checks through typed auth helpers rather than duplicating role logic in individual components.
@@ -111,7 +116,23 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 - Run `npm run lint` and TypeScript validation after meaningful frontend changes.
 - Run the smallest relevant build or test command before wider validation.
+- Introduce test frameworks or testing dependencies only when a feature or change requires repeatable automated coverage; do not install a testing stack prematurely.
+- Prefer focused component, integration, or route tests once testing is established, with coverage for role guards, forms, status transitions, filters, payments, and reload behavior.
 - Test responsive layouts at mobile, tablet, and desktop widths.
 - Add focused tests for role guards, form validation, status transitions, filters, and payment/booking UI behavior as test tooling is introduced.
 - Verify unauthorized and wrong-role routes, reload behavior, search/filter URL preservation, and loading/error/empty states.
 - Do not weaken or bypass lint, type, accessibility, or route validation to make a temporary implementation pass.
+
+<!-- Design Rules -->
+
+## Design System
+
+- Follow `app/globals.css` as the single source of truth for all design tokens and theme colors.
+- FixMate supports Light and Dark themes.
+- Light theme is the default. Dark theme activates only when the user explicitly toggles it.
+- Use existing CSS variables and Tailwind utilities instead of hardcoding colors.
+- Every UI component must support both themes.
+- Use the existing `next-themes` provider for theme management.
+- Maintain consistent typography, spacing, borders, shadows, and component styles.
+- Before creating new UI components, check for existing reusable components.
+- Never introduce a separate color palette or theme management system without approval.

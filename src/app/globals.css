@@ -1,26 +1,254 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+/* Dark mode support for Tailwind variants */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ============================================
+   THEME TOKENS
+============================================ */
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+	/* Typography */
+	--font-sans: var(--font-jakarta);
+
+	/* Brand colors */
+	--color-primary: var(--primary);
+	--color-primary-foreground: var(--primary-foreground);
+
+	--color-secondary: var(--secondary);
+	--color-secondary-foreground: var(--secondary-foreground);
+
+	--color-brand-accent: var(--brand-accent);
+	--color-brand-accent-foreground: var(--brand-accent-foreground);
+
+	/* Base colors */
+	--color-background: var(--background);
+	--color-foreground: var(--foreground);
+
+	/* Surfaces */
+	--color-card: var(--card);
+	--color-card-foreground: var(--card-foreground);
+
+	--color-popover: var(--popover);
+	--color-popover-foreground: var(--popover-foreground);
+
+	/* UI colors */
+	--color-muted: var(--muted);
+	--color-muted-foreground: var(--muted-foreground);
+
+	--color-accent: var(--accent);
+	--color-accent-foreground: var(--accent-foreground);
+
+	--color-destructive: var(--destructive);
+
+	--color-border: var(--border);
+	--color-input: var(--input);
+	--color-ring: var(--ring);
+
+	/* Status colors */
+	--color-status-requested: var(--status-requested);
+	--color-status-accepted: var(--status-accepted);
+	--color-status-progress: var(--status-progress);
+	--color-status-completed: var(--status-completed);
+	--color-status-rejected: var(--status-rejected);
+	--color-status-cancelled: var(--status-cancelled);
+
+	/* Sidebar */
+	--color-sidebar: var(--sidebar);
+	--color-sidebar-foreground: var(--sidebar-foreground);
+	--color-sidebar-border: var(--sidebar-border);
+
+	/* Chart colors */
+	--color-chart-1: var(--chart-1);
+	--color-chart-2: var(--chart-2);
+	--color-chart-3: var(--chart-3);
+	--color-chart-4: var(--chart-4);
+	--color-chart-5: var(--chart-5);
+
+	/* Radius */
+	--radius-sm: calc(var(--radius) - 4px);
+	--radius-md: calc(var(--radius) - 2px);
+	--radius-lg: var(--radius);
+	--radius-xl: calc(var(--radius) + 4px);
+	--radius-2xl: calc(var(--radius) + 8px);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* ============================================
+   LIGHT THEME
+============================================ */
+
+:root {
+	color-scheme: light;
+
+	/* Brand */
+	--primary: #173f35;
+	--primary-foreground: #ffffff;
+
+	--secondary: #287a60;
+	--secondary-foreground: #ffffff;
+
+	--brand-accent: #e6a756;
+	--brand-accent-foreground: #252b28;
+
+	/* Background */
+	--background: #f8f7f2;
+	--foreground: #252b28;
+
+	/* Surfaces */
+	--card: #ffffff;
+	--card-foreground: #252b28;
+
+	--popover: #ffffff;
+	--popover-foreground: #252b28;
+
+	/* Muted */
+	--muted: #f0f1ec;
+	--muted-foreground: #68756e;
+
+	/* Accent surface */
+	--accent: #eaf1ec;
+	--accent-foreground: #173f35;
+
+	/* Feedback */
+	--destructive: #dc2626;
+
+	/* Borders */
+	--border: #e5e9e3;
+	--input: #dde3dc;
+	--ring: #287a60;
+
+	/* Booking status */
+	--status-requested: #3b82f6;
+	--status-accepted: #6366f1;
+	--status-progress: #d97706;
+	--status-completed: #16a34a;
+	--status-rejected: #dc2626;
+	--status-cancelled: #64748b;
+
+	/* Sidebar */
+	--sidebar: #ffffff;
+	--sidebar-foreground: #252b28;
+	--sidebar-border: #e5e9e3;
+
+	/* Charts */
+	--chart-1: #287a60;
+	--chart-2: #e6a756;
+	--chart-3: #3b82f6;
+	--chart-4: #8b5cf6;
+	--chart-5: #ec6b5b;
+
+	/* Global radius */
+	--radius: 0.75rem;
+}
+
+/* ============================================
+   DARK THEME
+============================================ */
+
+.dark {
+	color-scheme: dark;
+
+	/* Brand */
+	--primary: #287a60;
+	--primary-foreground: #ffffff;
+
+	--secondary: #54a887;
+	--secondary-foreground: #10251d;
+
+	--brand-accent: #e6a756;
+	--brand-accent-foreground: #252b28;
+
+	/* Background */
+	--background: #121d19;
+	--foreground: #e8f0e9;
+
+	/* Surfaces */
+	--card: #1d2c25;
+	--card-foreground: #e8f0e9;
+
+	--popover: #24362d;
+	--popover-foreground: #e8f0e9;
+
+	/* Muted */
+	--muted: #24362d;
+	--muted-foreground: #a5b6aa;
+
+	/* Accent surface */
+	--accent: #294638;
+	--accent-foreground: #d9eadf;
+
+	/* Feedback */
+	--destructive: #f87171;
+
+	/* Borders */
+	--border: #304238;
+	--input: #3a5044;
+	--ring: #54a887;
+
+	/* Booking status */
+	--status-requested: #60a5fa;
+	--status-accepted: #818cf8;
+	--status-progress: #fbbf24;
+	--status-completed: #4ade80;
+	--status-rejected: #f87171;
+	--status-cancelled: #94a3b8;
+
+	/* Sidebar */
+	--sidebar: #17251e;
+	--sidebar-foreground: #e8f0e9;
+	--sidebar-border: #304238;
+
+	/* Charts */
+	--chart-1: #54a887;
+	--chart-2: #e6a756;
+	--chart-3: #60a5fa;
+	--chart-4: #a78bfa;
+	--chart-5: #fb8b79;
+}
+
+/* ============================================
+   BASE STYLES
+============================================ */
+
+* {
+	box-sizing: border-box;
+	border-color: var(--border);
+}
+
+html {
+	scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+	min-height: 100vh;
+	background-color: var(--background);
+	color: var(--foreground);
+	font-family: var(--font-jakarta), sans-serif;
+	-webkit-font-smoothing: antialiased;
+	text-rendering: optimizeLegibility;
+}
+
+/* ============================================
+   ACCESSIBILITY
+============================================ */
+
+:focus-visible {
+	outline: 2px solid var(--ring);
+	outline-offset: 3px;
+}
+
+::selection {
+	background-color: var(--primary);
+	color: var(--primary-foreground);
+}
+
+@media (prefers-reduced-motion: reduce) {
+	*,
+	*::before,
+	*::after {
+		scroll-behavior: auto !important;
+		animation-duration: 0.01ms !important;
+		animation-iteration-count: 1 !important;
+		transition-duration: 0.01ms !important;
+	}
 }
