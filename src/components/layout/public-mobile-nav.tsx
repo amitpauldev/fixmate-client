@@ -4,7 +4,10 @@ import Link from "next/link";
 import { Menu, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
+import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 import type { PublicNavItem } from "@/components/layout/public-navbar";
+import { authClient } from "@/lib/auth/auth-client";
 
 type PublicMobileNavProps = {
   items: PublicNavItem[];
@@ -14,6 +17,27 @@ export function PublicMobileNav({ items }: PublicMobileNavProps) {
   const [open, setOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
+  const router = useRouter();
+  const { data: session } = authClient.useSession();
+
+  const dashboardPath =
+    session?.user.role === "admin"
+      ? "/dashboard/admin"
+      : session?.user.role === "technician"
+        ? "/dashboard/technician"
+        : "/dashboard/customer";
+
+  const handleSignOut = async () => {
+    try {
+      await authClient.signOut();
+      toast.success("Signed out successfully.");
+      setOpen(false);
+      router.push("/");
+      router.refresh();
+    } catch {
+      toast.error("Unable to sign out. Please try again.");
+    }
+  };
 
   useEffect(() => {
     if (!open) return;
@@ -78,20 +102,41 @@ export function PublicMobileNav({ items }: PublicMobileNavProps) {
             ))}
           </div>
           <div className="mt-2 grid grid-cols-2 gap-2 border-t border-border pt-2">
-            <Link
-              href="/sign-in"
-              onClick={() => setOpen(false)}
-              className="rounded-lg border border-border px-4 py-3 text-center text-sm font-semibold text-card-foreground transition-colors hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-            >
-              Sign in
-            </Link>
-            <Link
-              href="/sign-up"
-              onClick={() => setOpen(false)}
-              className="rounded-lg bg-primary px-4 py-3 text-center text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-            >
-              Get started
-            </Link>
+            {session?.user ? (
+              <>
+                <Link
+                  href={dashboardPath}
+                  onClick={() => setOpen(false)}
+                  className="rounded-lg border border-border px-4 py-3 text-center text-sm font-semibold text-card-foreground transition-colors hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                >
+                  Dashboard
+                </Link>
+                <button
+                  type="button"
+                  onClick={handleSignOut}
+                  className="rounded-lg bg-destructive/10 px-4 py-3 text-center text-sm font-semibold text-destructive transition-colors hover:bg-destructive/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                >
+                  Sign out
+                </button>
+              </>
+            ) : (
+              <>
+                <Link
+                  href="/sign-in"
+                  onClick={() => setOpen(false)}
+                  className="rounded-lg border border-border px-4 py-3 text-center text-sm font-semibold text-card-foreground transition-colors hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                >
+                  Sign in
+                </Link>
+                <Link
+                  href="/sign-up"
+                  onClick={() => setOpen(false)}
+                  className="rounded-lg bg-primary px-4 py-3 text-center text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                >
+                  Get started
+                </Link>
+              </>
+            )}
           </div>
         </div>
       ) : null}

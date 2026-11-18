@@ -3,6 +3,7 @@ import Image from "next/image";
 import { ThemeToggle } from "@/components/theme/theme-toggle";
 import { PublicMobileNav } from "@/components/layout/public-mobile-nav";
 import { PublicNavLinks } from "@/components/layout/public-nav-links";
+import { PublicUserMenu } from "@/components/layout/public-user-menu";
 
 export type PublicNavItem = {
   label: string;
@@ -44,20 +45,7 @@ export function PublicNavbar() {
 
         <div className="flex items-center gap-2">
           <ThemeToggle />
-          <div className="hidden items-center gap-2 md:flex">
-            <Link
-              href="/sign-in"
-              className="rounded-lg px-3.5 py-2 text-sm font-semibold text-foreground transition-colors hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-            >
-              Sign in
-            </Link>
-            <Link
-              href="/sign-up"
-              className="rounded-lg bg-primary px-4 py-2.5 text-sm font-semibold text-primary-foreground shadow-sm transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
-            >
-              Get started
-            </Link>
-          </div>
+          <PublicUserMenu />
           <PublicMobileNav items={publicNavItems} />
         </div>
       </nav>
