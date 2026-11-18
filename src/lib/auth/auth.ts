@@ -11,12 +11,34 @@ export const auth = betterAuth({
 	}),
 	emailAndPassword: {
 		enabled: true,
+		minPasswordLength: 6,
 	},
-	additionalFields: {
-		role: {
-			type: ["customer", "service_provider", "admin"],
-			defaultValue: "customer",
-			input: true,
+	user: {
+		additionalFields: {
+			role: {
+				type: "string",
+				defaultValue: "customer",
+				input: true,
+			},
+		},
+	},
+	databaseHooks: {
+		user: {
+			create: {
+				before: async (user) => {
+					const role =
+						user.role === "customer" || user.role === "technician"
+							? user.role
+							: "customer";
+
+					return {
+						data: {
+							...user,
+							role,
+						},
+					};
+				},
+			},
 		},
 	},
 });

@@ -1,7 +1,16 @@
+import { PublicFooter } from "@/components/layout/public-footer";
+import { PublicNavbar } from "@/components/layout/public-navbar";
+
 export default function AuthLayout({
-  children,
+	children,
 }: {
-  children: React.ReactNode;
+	children: React.ReactNode;
 }) {
-  return <>{children}</>;
+	return (
+		<>
+			<PublicNavbar />
+			{children}
+			<PublicFooter />
+		</>
+	);
 }

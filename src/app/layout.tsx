@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Plus_Jakarta_Sans } from "next/font/google";
+import { Toaster } from "react-hot-toast";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme/theme-provider";
 
@@ -22,7 +23,32 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
 	return (
 		<html lang="en" suppressHydrationWarning>
 			<body className={`${jakarta.variable} antialiased`}>
-				<ThemeProvider>{children}</ThemeProvider>
+				<ThemeProvider>
+					{children}
+					<Toaster
+						position="top-right"
+						toastOptions={{
+							duration: 4000,
+							style: {
+								background: "var(--card)",
+								color: "var(--card-foreground)",
+								border: "1px solid var(--border)",
+							},
+							success: {
+								iconTheme: {
+									primary: "var(--secondary)",
+									secondary: "var(--primary-foreground)",
+								},
+							},
+							error: {
+								iconTheme: {
+									primary: "var(--destructive)",
+									secondary: "var(--primary-foreground)",
+								},
+							},
+						}}
+					/>
+				</ThemeProvider>
 			</body>
 		</html>
 	);
