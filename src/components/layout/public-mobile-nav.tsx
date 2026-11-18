@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import type { PublicNavItem } from "@/components/layout/public-navbar";
 import { authClient } from "@/lib/auth/auth-client";
+import { ConfirmationDialog } from "@/components/ui/confirmation-dialog";
 
 type PublicMobileNavProps = {
   items: PublicNavItem[];
@@ -15,6 +16,8 @@ type PublicMobileNavProps = {
 
 export function PublicMobileNav({ items }: PublicMobileNavProps) {
   const [open, setOpen] = useState(false);
+  const [signOutOpen, setSignOutOpen] = useState(false);
+  const [signingOut, setSigningOut] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
   const router = useRouter();
@@ -28,14 +31,19 @@ export function PublicMobileNav({ items }: PublicMobileNavProps) {
         : "/dashboard/customer";
 
   const handleSignOut = async () => {
+    if (signingOut) return;
+    setSigningOut(true);
     try {
       await authClient.signOut();
       toast.success("Signed out successfully.");
       setOpen(false);
+      setSignOutOpen(false);
       router.push("/");
       router.refresh();
     } catch {
       toast.error("Unable to sign out. Please try again.");
+    } finally {
+      setSigningOut(false);
     }
   };
 
@@ -113,7 +121,10 @@ export function PublicMobileNav({ items }: PublicMobileNavProps) {
                 </Link>
                 <button
                   type="button"
-                  onClick={handleSignOut}
+                  onClick={() => {
+                    setOpen(false);
+                    setSignOutOpen(true);
+                  }}
                   className="rounded-lg bg-destructive/10 px-4 py-3 text-center text-sm font-semibold text-destructive transition-colors hover:bg-destructive/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                 >
                   Sign out
@@ -140,6 +151,15 @@ export function PublicMobileNav({ items }: PublicMobileNavProps) {
           </div>
         </div>
       ) : null}
+      <ConfirmationDialog
+        open={signOutOpen}
+        title="Sign out of FixMate?"
+        description="You will need to sign in again to access your account and dashboards."
+        confirmLabel="Sign out"
+        onOpenChange={setSignOutOpen}
+        onConfirm={handleSignOut}
+        isConfirming={signingOut}
+      />
     </div>
   );
 }

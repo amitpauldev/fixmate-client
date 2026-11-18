@@ -6,6 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { authClient } from "@/lib/auth/auth-client";
+import { ConfirmationDialog } from "@/components/ui/confirmation-dialog";
 
 type SessionUser = {
   name?: string;
@@ -39,6 +40,8 @@ export function PublicUserMenu() {
   const router = useRouter();
   const { data: session, isPending } = authClient.useSession();
   const [open, setOpen] = useState(false);
+  const [signOutOpen, setSignOutOpen] = useState(false);
+  const [signingOut, setSigningOut] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -94,14 +97,19 @@ export function PublicUserMenu() {
   const dashboardPath = getDashboardPath(user.role);
 
   const handleSignOut = async () => {
+    if (signingOut) return;
+    setSigningOut(true);
     try {
       await authClient.signOut();
       toast.success("Signed out successfully.");
       setOpen(false);
+      setSignOutOpen(false);
       router.push("/");
       router.refresh();
     } catch {
       toast.error("Unable to sign out. Please try again.");
+    } finally {
+      setSigningOut(false);
     }
   };
 
@@ -162,7 +170,10 @@ export function PublicUserMenu() {
             <button
               type="button"
               role="menuitem"
-              onClick={handleSignOut}
+              onClick={() => {
+                setOpen(false);
+                setSignOutOpen(true);
+              }}
               className="flex w-full items-center gap-2 rounded-lg px-3 py-3 text-left text-sm font-medium text-destructive transition-colors hover:bg-destructive/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             >
               <LogOut className="size-4" aria-hidden="true" />
@@ -171,6 +182,15 @@ export function PublicUserMenu() {
           </div>
         </div>
       ) : null}
+      <ConfirmationDialog
+        open={signOutOpen}
+        title="Sign out of FixMate?"
+        description="You will need to sign in again to access your account and dashboards."
+        confirmLabel="Sign out"
+        onOpenChange={setSignOutOpen}
+        onConfirm={handleSignOut}
+        isConfirming={signingOut}
+      />
     </div>
   );
 }
