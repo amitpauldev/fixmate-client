@@ -32,7 +32,10 @@ type ImageMode = "upload" | "url";
 type ServiceFormProps = {
 	initialValues?: Partial<ServiceFormValues>;
 	submitLabel?: string;
-	onSubmit: (values: ServiceFormSubmission) => void | Promise<void>;
+	onSubmit: (
+		values: ServiceFormValues,
+		imageFile?: File | null,
+	) => void | Promise<void>;
 };
 
 const fieldClassName =
@@ -124,10 +127,7 @@ export function ServiceForm({
 
 		setSubmitting(true);
 		try {
-			await onSubmit({
-				...values,
-				imageFile: imageFile?.size ? imageFile : null,
-			});
+			await onSubmit(values, imageFile);
 		} finally {
 			setSubmitting(false);
 		}
