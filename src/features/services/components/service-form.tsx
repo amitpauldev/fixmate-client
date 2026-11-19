@@ -22,10 +22,7 @@ import {
 	validateServiceForm,
 	type ServiceFormErrors,
 } from "@/features/services/schemas/service-form";
-import type {
-	ServiceFormSubmission,
-	ServiceFormValues,
-} from "@/features/services/types/service";
+import type { ServiceFormValues } from "@/features/services/types/service";
 
 type ImageMode = "upload" | "url";
 
@@ -93,6 +90,8 @@ export function ServiceForm({
 
 	const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
+
+		const formElement = event.currentTarget;
 		const form = new FormData(event.currentTarget);
 		const imageFile =
 			imageMode === "upload" ? (form.get("imageFile") as File | null) : null;
@@ -128,6 +127,12 @@ export function ServiceForm({
 		setSubmitting(true);
 		try {
 			await onSubmit(values, imageFile);
+			formElement.reset();
+
+			setPreview("");
+			setImageMode("upload");
+			setIsAvailable(true);
+			setErrors({});
 		} finally {
 			setSubmitting(false);
 		}
@@ -315,6 +320,7 @@ export function ServiceForm({
 											src={preview}
 											alt="Service preview"
 											fill
+											sizes="128px"
 											unoptimized
 											className="object-cover"
 										/>
@@ -378,12 +384,13 @@ export function ServiceForm({
 									/>
 								</div>
 							</div>
-							<div className="flex size-32 items-center justify-center overflow-hidden rounded-xl border border-dashed border-input bg-muted sm:mt-6">
+							<div className="relative flex size-32 items-center justify-center overflow-hidden rounded-xl border border-dashed border-input bg-muted sm:mt-6">
 								{preview ? (
 									<Image
 										src={preview}
 										alt="Service preview"
 										fill
+										sizes="128px"
 										unoptimized
 										className="object-cover"
 									/>

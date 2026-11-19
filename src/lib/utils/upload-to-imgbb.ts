@@ -20,7 +20,19 @@ export async function uploadToImgBB(file: File) {
 		throw new Error("Image upload failed");
 	}
 
-	const data = await response.json();
+	const data: unknown = await response.json();
+	if (
+		typeof data !== "object" ||
+		data === null ||
+		!("data" in data) ||
+		typeof data.data !== "object" ||
+		data.data === null ||
+		!("url" in data.data) ||
+		typeof data.data.url !== "string" ||
+		!data.data.url
+	) {
+		throw new Error("ImgBB returned an invalid image response");
+	}
 
-	return data.data.url as string;
+	return data.data.url;
 }

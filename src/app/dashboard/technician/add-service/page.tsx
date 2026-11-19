@@ -3,12 +3,8 @@
 import toast from "react-hot-toast";
 import { ServiceForm } from "@/features/services/components/service-form";
 import { authClient } from "@/lib/auth/auth-client";
-import type {
-	ServiceFormSubmission,
-	ServiceFormValues,
-} from "@/features/services/types/service";
+import type { ServiceFormValues } from "@/features/services/types/service";
 import { addService } from "@/features/services/actions/service.action";
-import { uploadToImgBB } from "@/lib/utils/upload-to-imgbb";
 
 export default function AddServicePage() {
 	const { data: session } = authClient.useSession();
@@ -18,12 +14,16 @@ export default function AddServicePage() {
 		values: ServiceFormValues,
 		imageFile?: File | null,
 	) => {
-		const result = await addService(values, imageFile);
-		if (!result.success) {
-			toast.error(result.message);
-			return;
+		try {
+			const result = await addService(values, imageFile);
+			if (!result.success) {
+				toast.error(result.message);
+				return;
+			}
+			toast.success(result.message);
+		} catch {
+			toast.error("Failed to add service. Please try again.");
 		}
-		toast.success(result.message);
 	};
 
 	return (
