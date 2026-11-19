@@ -25,6 +25,7 @@ import {
 import toast from "react-hot-toast";
 import { ConfirmationDialog } from "@/components/ui/confirmation-dialog";
 import { authClient } from "@/lib/auth/auth-client";
+import { ThemeToggle } from "@/components/theme/theme-toggle";
 
 type DashboardRole = "customer" | "technician" | "admin";
 
@@ -183,6 +184,10 @@ export default function DashboardLayout({
 						</span>
 					) : null}
 				</Link>
+
+				<div className={collapsed ? "hidden" : ""}>
+					<ThemeToggle />
+				</div>
 
 				<button
 					type="button"
