@@ -111,6 +111,8 @@ export function ServiceForm({
 			technicianEmail: String(form.get("technicianEmail") || ""),
 			approvalStatus: "pending",
 			isAvailable,
+			createdAt: new Date().toISOString(),
+			updatedAt: new Date().toISOString(),
 		};
 
 		const nextErrors = validateServiceForm(
