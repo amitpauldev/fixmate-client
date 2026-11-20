@@ -1,5 +1,7 @@
 import { Pencil, Trash2, Wrench } from "lucide-react";
 import type { Service } from "@/features/services/types/service";
+import Link from "next/link";
+import DeleteService from "./deleteService";
 
 type MyServicesListProps = {
 	services: Service[];
@@ -115,20 +117,15 @@ export function MyServicesList({ services, error }: MyServicesListProps) {
 									<AvailabilityToggle isAvailable={service.isAvailable} />
 								</div>
 								<div className="flex items-center gap-2">
-									<button
-										type="button"
+									<Link
 										className="inline-flex flex-1 items-center justify-center gap-2 rounded-lg bg-accent px-3 py-2.5 text-sm font-bold text-accent-foreground transition-colors hover:bg-secondary/15 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+										href={`/dashboard/technician/my-services/update/${service._id}`}
 									>
 										<Pencil className="size-4" aria-hidden="true" />
 										Edit
-									</button>
-									<button
-										type="button"
-										aria-label={`Delete ${service.title}`}
-										className="inline-flex size-10 items-center justify-center rounded-lg border border-border text-muted-foreground transition-colors hover:border-destructive/30 hover:bg-destructive/10 hover:text-destructive focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-									>
-										<Trash2 className="size-4" aria-hidden="true" />
-									</button>
+									</Link>
+
+									<DeleteService service={service} />
 								</div>
 							</div>
 						</article>

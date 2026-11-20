@@ -5,9 +5,11 @@ import { ServiceForm } from "@/features/services/components/service-form";
 import { authClient } from "@/lib/auth/auth-client";
 import type { ServiceFormValues } from "@/features/services/types/service";
 import { addService } from "@/features/services/actions/service.action";
+import { useRouter } from "next/navigation";
 
 export default function AddServicePage() {
 	const { data: session } = authClient.useSession();
+	const router = useRouter();
 	const user = session?.user as
 		| { name?: string; email?: string; id?: string }
 		| undefined;
@@ -21,7 +23,6 @@ export default function AddServicePage() {
 			</div>
 		);
 	}
-	console.log("User:", user);
 
 	const handleSubmit = async (
 		values: ServiceFormValues,
@@ -34,6 +35,7 @@ export default function AddServicePage() {
 				return;
 			}
 			toast.success(result.message);
+			router.push("/dashboard/technician/my-services");
 		} catch {
 			toast.error("Failed to add service. Please try again.");
 		}

@@ -483,7 +483,7 @@ export function ServiceForm({
 				<button
 					type="submit"
 					disabled={submitting}
-					className="inline-flex h-11 items-center justify-center gap-2 rounded-lg bg-brand-accent px-5 text-sm font-bold text-brand-accent-foreground shadow-sm transition-[transform,background-color] hover:bg-brand-accent/90 disabled:cursor-not-allowed disabled:opacity-60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-card"
+					className="cursor-pointer inline-flex h-11 items-center justify-center gap-2 rounded-lg bg-brand-accent px-5 text-sm font-bold text-brand-accent-foreground shadow-sm transition-[transform,background-color] hover:bg-brand-accent/90 disabled:cursor-not-allowed disabled:opacity-60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-card"
 				>
 					<Send className="size-4" aria-hidden="true" />
 					{submitting ? "Submitting..." : submitLabel}

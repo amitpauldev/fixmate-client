@@ -35,3 +35,17 @@ export async function getServicesByTechnicianId(
 
 	return result.data;
 }
+
+export async function getServiceById(id: string): Promise<Service | null> {
+	const response = await fetch(`${API_URL}/api/services/${id}`, {
+		cache: "no-store",
+	});
+
+	if (!response.ok) {
+		throw new Error("Failed to fetch service");
+	}
+
+	const result: ApiResponse<Service> = await response.json();
+
+	return result.data;
+}
