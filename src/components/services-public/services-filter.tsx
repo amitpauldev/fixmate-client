@@ -1,18 +1,63 @@
+"use client";
+
 import { Search, SlidersHorizontal, X } from "lucide-react";
-import { serviceCategories, serviceModes } from "@/features/services/schemas/service-form";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useState } from "react";
+import {
+	serviceCategories,
+	serviceModes,
+} from "@/features/services/schemas/service-form";
+import type { ServiceQueryParams } from "@/lib/api/services";
 
 const controlClassName =
 	"h-11 w-full rounded-lg border border-input bg-card px-3 text-sm text-card-foreground outline-none transition-[border-color,box-shadow] focus:border-ring focus:ring-2 focus:ring-ring/20";
 
-export function ServicesFilter() {
+type ServicesFilterProps = {
+	defaultValues: {
+		category?: string;
+		serviceMode?: ServiceQueryParams["serviceMode"];
+		sort?: ServiceQueryParams["sort"];
+	};
+};
+
+export function ServicesFilter({ defaultValues }: ServicesFilterProps) {
+	const router = useRouter();
+	const currentSearchParams = useSearchParams();
+	const [search, setSearch] = useState("");
+
+	const updateQuery = (
+		name: "category" | "serviceMode" | "sort",
+		value: string,
+	) => {
+		const searchParams = new URLSearchParams(currentSearchParams.toString());
+
+		if (value && !(name === "sort" && value === "newest")) {
+			searchParams.set(name, value);
+		} else {
+			searchParams.delete(name);
+		}
+
+		const query = searchParams.toString();
+		router.replace(query ? `/services?${query}` : "/services");
+	};
+
+	const handleClear = () => {
+		setSearch("");
+		router.replace("/services");
+	};
+
 	return (
 		<form
 			role="search"
 			aria-label="Filter services"
 			className="rounded-2xl border border-border bg-card p-4 shadow-sm sm:p-5"
+			onSubmit={(event) => event.preventDefault()}
 		>
 			<div className="mb-4 flex items-center gap-2 text-sm font-bold text-card-foreground">
-				<SlidersHorizontal className="size-4 text-secondary" aria-hidden="true" />
+				<SlidersHorizontal
+					className="size-4 text-secondary"
+					aria-hidden="true"
+				/>
 				Filter services
 			</div>
 
@@ -29,6 +74,8 @@ export function ServicesFilter() {
 						<input
 							type="search"
 							name="search"
+							value={search}
+							onChange={(event) => setSearch(event.target.value)}
 							placeholder="Search by service"
 							className={`${controlClassName} pl-9`}
 						/>
@@ -39,7 +86,12 @@ export function ServicesFilter() {
 					<span className="mb-2 block text-xs font-bold text-muted-foreground">
 						Category
 					</span>
-					<select name="category" className={controlClassName}>
+					<select
+						name="category"
+						defaultValue={defaultValues.category || ""}
+						className={controlClassName}
+						onChange={(event) => updateQuery("category", event.target.value)}
+					>
 						<option value="">All categories</option>
 						{serviceCategories.map((category) => (
 							<option key={category} value={category}>
@@ -53,7 +105,12 @@ export function ServicesFilter() {
 					<span className="mb-2 block text-xs font-bold text-muted-foreground">
 						Service mode
 					</span>
-					<select name="serviceMode" className={controlClassName}>
+					<select
+						name="serviceMode"
+						defaultValue={defaultValues.serviceMode || ""}
+						className={controlClassName}
+						onChange={(event) => updateQuery("serviceMode", event.target.value)}
+					>
 						<option value="">All modes</option>
 						{serviceModes.map((mode) => (
 							<option key={mode} value={mode}>
@@ -67,16 +124,21 @@ export function ServicesFilter() {
 					<span className="mb-2 block text-xs font-bold text-muted-foreground">
 						Sort by
 					</span>
-					<select name="sort" className={controlClassName}>
-						<option value="recommended">Recommended</option>
+					<select
+						name="sort"
+						defaultValue={defaultValues.sort || "newest"}
+						className={controlClassName}
+						onChange={(event) => updateQuery("sort", event.target.value)}
+					>
+						<option value="newest">Newest</option>
 						<option value="price-low">Price: Low to high</option>
 						<option value="price-high">Price: High to low</option>
-						<option value="newest">Newest</option>
 					</select>
 				</label>
 
 				<button
 					type="reset"
+					onClick={handleClear}
 					className="inline-flex h-11 items-center justify-center gap-2 rounded-lg border border-border px-4 text-sm font-bold text-muted-foreground transition-colors hover:border-secondary/50 hover:bg-accent hover:text-accent-foreground sm:col-span-2 lg:col-span-1"
 				>
 					<X className="size-4" aria-hidden="true" />
