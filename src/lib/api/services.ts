@@ -3,10 +3,17 @@ import type { ApiResponse } from "./types";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
-export async function getServices(): Promise<Service[]> {
-	const response = await fetch(`${API_URL}/api/services`, {
-		cache: "no-store",
-	});
+export async function getServices({
+	query,
+}: {
+	query?: string;
+}): Promise<Service[]> {
+	const response = await fetch(
+		`${API_URL}/api/services${query ? `?query=${query}` : ""}`,
+		{
+			cache: "no-store",
+		},
+	);
 
 	if (!response.ok) {
 		throw new Error("Failed to fetch services");
