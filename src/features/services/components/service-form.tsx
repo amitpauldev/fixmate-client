@@ -109,6 +109,7 @@ export function ServiceForm({
 				form.get("serviceMode") || "",
 			) as ServiceFormValues["serviceMode"],
 			serviceArea: String(form.get("serviceArea") || ""),
+			technicianId: initialValues?.technicianId || "",
 			technicianName: String(form.get("technicianName") || ""),
 			technicianEmail: String(form.get("technicianEmail") || ""),
 			approvalStatus: "pending",
@@ -116,6 +117,7 @@ export function ServiceForm({
 			createdAt: new Date().toISOString(),
 			updatedAt: new Date().toISOString(),
 		};
+		console.log("technicianId", values.technicianId);
 
 		const nextErrors = validateServiceForm(
 			values,

@@ -8,7 +8,20 @@ import { addService } from "@/features/services/actions/service.action";
 
 export default function AddServicePage() {
 	const { data: session } = authClient.useSession();
-	const user = session?.user as { name?: string; email?: string } | undefined;
+	const user = session?.user as
+		| { name?: string; email?: string; id?: string }
+		| undefined;
+
+	if (!user) {
+		return (
+			<div className="mx-auto w-full max-w-6xl p-4 sm:p-6 lg:p-8">
+				<p className="mt-2 text-sm text-muted-foreground">
+					You must be logged in to add a new service.
+				</p>
+			</div>
+		);
+	}
+	console.log("User:", user);
 
 	const handleSubmit = async (
 		values: ServiceFormValues,
@@ -40,10 +53,11 @@ export default function AddServicePage() {
 				</p>
 			</div>
 			<ServiceForm
-				key={`${user?.name || "name"}-${user?.email || "email"}`}
+				key={`${user?.name || "name"}-${user?.email || "email"}-${user?.id || "id"}`}
 				initialValues={{
 					technicianName: user?.name,
 					technicianEmail: user?.email,
+					technicianId: user?.id,
 				}}
 				onSubmit={handleSubmit}
 			/>

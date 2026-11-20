@@ -14,6 +14,7 @@ export type ServiceFormValues = {
 	estimatedDuration: string;
 	serviceMode: "Home Visit" | "Shop Drop-off";
 	serviceArea: string;
+	technicianId: string;
 	technicianName: string;
 	technicianEmail: string;
 	approvalStatus: "pending" | "approved" | "rejected";
@@ -24,4 +25,8 @@ export type ServiceFormValues = {
 
 export type ServiceFormSubmission = ServiceFormValues & {
 	imageFile: File | null;
+};
+
+export type Service = ServiceFormValues & {
+	_id: string;
 };
