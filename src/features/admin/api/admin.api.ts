@@ -1,7 +1,7 @@
 export async function getAllServices() {
 	try {
 		const res = await fetch(
-			`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/admin/services`,
+			`${process.env.NEXT_PUBLIC_API_URL}/api/admin/services`,
 			{
 				cache: "no-store",
 			},
