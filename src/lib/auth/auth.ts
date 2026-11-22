@@ -21,6 +21,26 @@ export const auth = betterAuth({
 				defaultValue: "customer",
 				input: true,
 			},
+			bio: {
+				type: "string",
+				defaultValue: "",
+				input: true,
+			},
+			phone: {
+				type: "string",
+				defaultValue: "",
+				input: true,
+			},
+			area: {
+				type: "string",
+				defaultValue: "",
+				input: true,
+			},
+			image: {
+				type: "string",
+				defaultValue: "",
+				input: true,
+			},
 		},
 	},
 	databaseHooks: {

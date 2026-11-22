@@ -66,7 +66,7 @@ export function BookingCard({ booking }: BookingCardProps) {
 	return (
 		<>
 			<article className="relative grid overflow-hidden rounded-2xl border border-border bg-card shadow-sm sm:grid-cols-[112px_minmax(0,1fr)] lg:grid-cols-[112px_minmax(0,1fr)_210px]">
-				<div className="m-5 flex h-24 items-center justify-center overflow-hidden rounded-xl border border-border bg-muted sm:m-5 sm:mb-auto">
+				<div className="m-5 flex w-20 h-20 items-center justify-center overflow-hidden rounded-xl border border-border bg-muted sm:m-5 sm:mb-auto">
 					{booking.serviceImage ? (
 						<div
 							role="img"
@@ -75,7 +75,11 @@ export function BookingCard({ booking }: BookingCardProps) {
 							style={{ backgroundImage: `url("${booking.serviceImage}")` }}
 						/>
 					) : (
-						<Wrench className="size-9 text-secondary" strokeWidth={1.5} aria-hidden="true" />
+						<Wrench
+							className="size-9 text-secondary"
+							strokeWidth={1.5}
+							aria-hidden="true"
+						/>
 					)}
 				</div>
 
@@ -90,10 +94,16 @@ export function BookingCard({ booking }: BookingCardProps) {
 
 					<div className="mt-4 flex flex-wrap gap-x-5 gap-y-2 text-xs text-muted-foreground">
 						<p>
-							Requested <span className="font-bold text-card-foreground">{formatDate(booking.createdAt)}</span>
+							Requested{" "}
+							<span className="font-bold text-card-foreground">
+								{formatDate(booking.createdAt)}
+							</span>
 						</p>
 						<p>
-							Preferred <span className="font-bold text-card-foreground">{formatDate(booking.preferredDate)}</span>
+							Preferred{" "}
+							<span className="font-bold text-card-foreground">
+								{formatDate(booking.preferredDate)}
+							</span>
 						</p>
 					</div>
 
@@ -104,7 +114,10 @@ export function BookingCard({ booking }: BookingCardProps) {
 
 				<div className="border-t border-dashed border-border px-5 py-5 lg:border-l lg:border-t-0">
 					<p className="text-xs text-muted-foreground">
-						Ticket <span className="font-semibold">#{booking._id.slice(-5).toUpperCase()}</span>
+						Ticket{" "}
+						<span className="font-semibold">
+							#{booking._id.slice(-5).toUpperCase()}
+						</span>
 					</p>
 
 					<div className="mt-2 flex flex-wrap gap-2">
@@ -129,7 +142,8 @@ export function BookingCard({ booking }: BookingCardProps) {
 						{booking.status === "completed" ? "Final amount" : "Starting price"}
 					</p>
 					<p className="mt-1 text-2xl font-bold text-card-foreground">
-						${booking.status === "completed" && booking.finalAmount
+						$
+						{booking.status === "completed" && booking.finalAmount
 							? booking.finalAmount.toFixed(0)
 							: booking.basePrice.toFixed(0)}
 					</p>
@@ -144,14 +158,15 @@ export function BookingCard({ booking }: BookingCardProps) {
 						</button>
 					)}
 
-					{booking.status === "completed" && booking.paymentStatus === "unpaid" && (
-						<button
-							type="button"
-							className="mt-4 h-10 w-full rounded-lg bg-brand-accent text-sm font-bold text-brand-accent-foreground transition-colors hover:bg-brand-accent/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-						>
-							Pay now
-						</button>
-					)}
+					{booking.status === "completed" &&
+						booking.paymentStatus === "unpaid" && (
+							<button
+								type="button"
+								className="mt-4 h-10 w-full rounded-lg bg-brand-accent text-sm font-bold text-brand-accent-foreground transition-colors hover:bg-brand-accent/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+							>
+								Pay now
+							</button>
+						)}
 				</div>
 			</article>
 
