@@ -8,6 +8,7 @@ import { WhyChooseFixMate } from "@/components/shared/home/why-choose-fixmate";
 import { FeaturedTechnicians } from "@/components/shared/home/featured-technicians";
 import { FeaturedTechniciansLoading } from "@/components/shared/home/featured-technicians-loading";
 import { CustomerTestimonials } from "@/components/shared/home/customer-testimonials";
+import { FinalCallToAction } from "@/components/shared/home/final-call-to-action";
 
 export const metadata: Metadata = {
 	title: "FixMate | Trusted Repair Services",
@@ -28,6 +29,7 @@ export default function HomePage() {
 				<FeaturedTechnicians />
 			</Suspense>
 			<CustomerTestimonials />
+			<FinalCallToAction />
 		</>
 	);
 }
