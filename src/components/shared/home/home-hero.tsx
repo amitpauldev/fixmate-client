@@ -1,13 +1,12 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, MapPin, ShieldCheck, Wrench } from "lucide-react";
-import type { Service } from "@/features/services/types/service";
+import { ArrowRight, ShieldCheck } from "lucide-react";
+import { HeroProgressCard } from "./hero-progress-card";
+import { HeroServiceCategories } from "./hero-service-categories";
+import { HeroTrustBadge } from "./hero-trust-badge";
+import { HeroWrenchBadge } from "./hero-wrench-badge";
 
-type HomeHeroProps = {
-	featuredService?: Service | null;
-};
-
-export function HomeHero({ featuredService }: HomeHeroProps) {
+export function HomeHero() {
 	return (
 		<section
 			aria-labelledby="home-hero-title"
@@ -48,94 +47,38 @@ export function HomeHero({ featuredService }: HomeHeroProps) {
 							<ArrowRight className="size-4" aria-hidden="true" />
 						</Link>
 						<Link
-							href="/sign-up"
-							className="inline-flex h-12 items-center justify-center rounded-lg border border-border bg-card px-5 text-sm font-bold text-card-foreground transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+							href="/about"
+							className="inline-flex h-12 items-center justify-center rounded-lg border border-border bg-card px-20 text-sm font-bold text-card-foreground transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
 						>
-							Become a technician
+							About us
 						</Link>
 					</div>
 				</div>
 
-				<HomeHeroVisual service={featuredService} />
+				<HomeHeroVisual />
 			</div>
 		</section>
 	);
 }
 
-type HomeHeroVisualProps = {
-	service?: Service | null;
-};
-
-export function HomeHeroVisual({ service }: HomeHeroVisualProps) {
+export function HomeHeroVisual() {
 	return (
-		<div className="relative">
-			<div className="overflow-hidden rounded-xl border border-border bg-card shadow-sm">
-				<div className="relative aspect-[4/3] overflow-hidden bg-muted">
-					{service?.image ? (
-						<Image
-							src={service.image}
-							alt={`${service.title} repair service`}
-							fill
-							sizes="(max-width: 1024px) 100vw, 52vw"
-							priority
-							unoptimized
-							className="object-cover"
-						/>
-					) : (
-						<div className="absolute inset-0 flex items-center justify-center bg-accent">
-							<div className="flex size-32 items-center justify-center rounded-full border border-border bg-card text-secondary shadow-sm">
-								<Wrench className="size-14" strokeWidth={1.35} aria-hidden="true" />
-							</div>
-						</div>
-					)}
-				</div>
+		<div className="relative mx-auto w-full max-w-[560px]">
+			<div className="relative aspect-[4/3] overflow-hidden rounded-xl bg-[#F1F4EF]">
+				<Image
+					src="/images/hero-person.png"
+					alt="FixMate technician ready to help with a repair"
+					fill
+					sizes="(max-width: 1024px) 100vw, 52vw"
+					priority
+					className="object-contain object-bottom"
+				/>
 			</div>
 
-			<div className="relative -mt-14 ml-4 mr-4 rounded-lg border border-border bg-card p-4 shadow-md sm:absolute sm:bottom-5 sm:left-5 sm:right-auto sm:mt-0 sm:w-[min(21rem,calc(100%-2.5rem))] sm:p-5">
-				{service ? (
-					<>
-						<div className="flex items-start justify-between gap-4">
-							<div className="min-w-0">
-								<p className="text-xs font-bold uppercase tracking-[0.12em] text-secondary">
-									{service.category}
-								</p>
-								<h2 className="mt-1 line-clamp-2 text-base font-bold leading-6 text-card-foreground sm:text-lg">
-									{service.title}
-								</h2>
-							</div>
-							<div className="shrink-0 text-right">
-								<p className="text-xs text-muted-foreground">From</p>
-								<p className="mt-0.5 text-base font-bold text-card-foreground">
-									tk. {service.basePrice.toFixed(0)}
-								</p>
-							</div>
-						</div>
-						<div className="mt-3 flex items-center justify-between border-t border-border pt-3 text-xs text-muted-foreground">
-							<span className="flex min-w-0 items-center gap-1.5">
-								<MapPin className="size-3.5 shrink-0 text-secondary" aria-hidden="true" />
-								<span className="truncate">{service.serviceArea}</span>
-							</span>
-							<span className="ml-3 shrink-0 font-semibold text-card-foreground">
-								{service.serviceMode}
-							</span>
-						</div>
-					</>
-				) : (
-					<div className="flex items-center gap-3">
-						<span className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-accent text-secondary">
-							<ShieldCheck className="size-5" aria-hidden="true" />
-						</span>
-						<div>
-							<p className="text-sm font-bold text-card-foreground">
-								Professional repair help
-							</p>
-							<p className="mt-0.5 text-xs text-muted-foreground">
-								Home visit or shop drop-off
-							</p>
-						</div>
-					</div>
-				)}
-			</div>
+			<HeroProgressCard />
+			<HeroServiceCategories />
+			<HeroTrustBadge />
+			<HeroWrenchBadge />
 		</div>
 	);
 }
