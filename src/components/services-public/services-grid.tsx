@@ -1,3 +1,5 @@
+"use client";
+
 import type { Service } from "@/features/services/types/service";
 import { ServiceCard } from "./service-card";
 import { ServicesEmptyState } from "./services-empty-state";

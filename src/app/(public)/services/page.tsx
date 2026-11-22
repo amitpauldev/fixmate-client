@@ -1,8 +1,7 @@
 import { getServices } from "@/lib/api/services";
 import type { Service } from "@/features/services/types/service";
-import { ServicesFilter } from "@/components/services-public/services-filter";
-import { ServicesGrid } from "@/components/services-public/services-grid";
 import { ServicesPageHeader } from "@/components/services-public/services-page-header";
+import { ServicesDirectory } from "@/components/services-public/services-directory";
 import type { ServiceQueryParams } from "@/lib/api/services";
 import { serviceCategories, serviceModes } from "@/features/services/schemas/service-form";
 
@@ -52,12 +51,11 @@ export default async function ServicesPage({ searchParams }: ServicesPageProps) 
 		<>
 			<ServicesPageHeader />
 			<div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 sm:py-10 lg:px-8 lg:py-12">
-				<ServicesFilter
+				<ServicesDirectory
+					services={services}
+					error={error}
 					defaultValues={{ category, serviceMode, sort }}
 				/>
-				<div className="mt-8">
-					<ServicesGrid services={services} error={error} />
-				</div>
 			</div>
 		</>
 	);

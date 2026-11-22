@@ -1,5 +1,12 @@
 import Link from "next/link";
-import { ArrowRight, MapPin, Store, Truck, UserRound, Wrench } from "lucide-react";
+import {
+	ArrowRight,
+	MapPin,
+	Store,
+	Truck,
+	UserRound,
+	Wrench,
+} from "lucide-react";
 import type { Service } from "@/features/services/types/service";
 
 type ServiceCardProps = {
@@ -35,14 +42,23 @@ export function ServiceCard({ service }: ServiceCardProps) {
 				<div className="mt-4 grid grid-cols-2 gap-2 text-xs font-semibold text-muted-foreground">
 					<span className="flex min-w-0 items-center gap-2 rounded-lg bg-muted px-3 py-2.5">
 						{service.serviceMode === "Home Visit" ? (
-							<Truck className="size-4 shrink-0 text-secondary" aria-hidden="true" />
+							<Truck
+								className="size-4 shrink-0 text-secondary"
+								aria-hidden="true"
+							/>
 						) : (
-							<Store className="size-4 shrink-0 text-secondary" aria-hidden="true" />
+							<Store
+								className="size-4 shrink-0 text-secondary"
+								aria-hidden="true"
+							/>
 						)}
 						<span className="truncate">{service.serviceMode}</span>
 					</span>
 					<span className="flex min-w-0 items-center gap-2 rounded-lg bg-muted px-3 py-2.5">
-						<MapPin className="size-4 shrink-0 text-secondary" aria-hidden="true" />
+						<MapPin
+							className="size-4 shrink-0 text-secondary"
+							aria-hidden="true"
+						/>
 						<span className="truncate">{service.serviceArea}</span>
 					</span>
 				</div>
@@ -53,7 +69,7 @@ export function ServiceCard({ service }: ServiceCardProps) {
 							Starting price
 						</p>
 						<p className="mt-1 text-xl font-bold text-card-foreground">
-							${service.basePrice.toFixed(2)}
+							tk. {service.basePrice.toFixed(2)}
 						</p>
 					</div>
 					<div className="max-w-[45%] text-right">

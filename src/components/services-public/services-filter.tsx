@@ -2,7 +2,6 @@
 
 import { Search, SlidersHorizontal, X } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useState } from "react";
 import {
 	serviceCategories,
 	serviceModes,
@@ -18,12 +17,19 @@ type ServicesFilterProps = {
 		serviceMode?: ServiceQueryParams["serviceMode"];
 		sort?: ServiceQueryParams["sort"];
 	};
+	search: string;
+	onSearchChange: (value: string) => void;
+	onClearSearch: () => void;
 };
 
-export function ServicesFilter({ defaultValues }: ServicesFilterProps) {
+export function ServicesFilter({
+	defaultValues,
+	search,
+	onSearchChange,
+	onClearSearch,
+}: ServicesFilterProps) {
 	const router = useRouter();
 	const currentSearchParams = useSearchParams();
-	const [search, setSearch] = useState("");
 
 	const updateQuery = (
 		name: "category" | "serviceMode" | "sort",
@@ -42,7 +48,7 @@ export function ServicesFilter({ defaultValues }: ServicesFilterProps) {
 	};
 
 	const handleClear = () => {
-		setSearch("");
+		onClearSearch();
 		router.replace("/services");
 	};
 
@@ -50,10 +56,10 @@ export function ServicesFilter({ defaultValues }: ServicesFilterProps) {
 		<form
 			role="search"
 			aria-label="Filter services"
-			className="rounded-2xl border border-border bg-card p-4 shadow-sm sm:p-5"
+			className="lg:sticky lg:top-4 backdrop-blur-2xl z-5 rounded-2xl border border-border bg-card dark:bg-primary/70 p-4 shadow-sm sm:p-5"
 			onSubmit={(event) => event.preventDefault()}
 		>
-			<div className="mb-4 flex items-center gap-2 text-sm font-bold text-card-foreground">
+			<div className=" mb-4 flex items-center gap-2 text-sm font-bold text-card-foreground">
 				<SlidersHorizontal
 					className="size-4 text-secondary"
 					aria-hidden="true"
@@ -61,7 +67,7 @@ export function ServicesFilter({ defaultValues }: ServicesFilterProps) {
 				Filter services
 			</div>
 
-			<div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-[minmax(220px,1.5fr)_repeat(3,minmax(150px,1fr))_auto] lg:items-end">
+			<div className=" grid gap-3 sm:grid-cols-2 lg:grid-cols-[minmax(220px,1.5fr)_repeat(3,minmax(150px,1fr))_auto] lg:items-end">
 				<label className="block">
 					<span className="mb-2 block text-xs font-bold text-muted-foreground">
 						Search
@@ -75,7 +81,7 @@ export function ServicesFilter({ defaultValues }: ServicesFilterProps) {
 							type="search"
 							name="search"
 							value={search}
-							onChange={(event) => setSearch(event.target.value)}
+							onChange={(event) => onSearchChange(event.target.value)}
 							placeholder="Search by service"
 							className={`${controlClassName} pl-9`}
 						/>
