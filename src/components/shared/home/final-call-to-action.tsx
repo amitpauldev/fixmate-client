@@ -8,10 +8,7 @@ export function FinalCallToAction() {
 	const reduceMotion = useReducedMotion();
 
 	return (
-		<section
-			aria-labelledby="final-cta-title"
-			className="bg-background"
-		>
+		<section aria-labelledby="final-cta-title" className="bg-background">
 			<div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 sm:py-14 lg:px-8 lg:py-16">
 				<motion.div
 					initial={reduceMotion ? false : { opacity: 0, y: 16 }}
@@ -35,9 +32,7 @@ export function FinalCallToAction() {
 
 					<motion.div
 						animate={
-							reduceMotion
-								? undefined
-								: { y: [0, -5, 0], rotate: [0, 1.5, 0] }
+							reduceMotion ? undefined : { y: [0, -5, 0], rotate: [0, 1.5, 0] }
 						}
 						transition={{
 							duration: 4.2,
