@@ -4,6 +4,9 @@ import { HomeHero } from "@/components/shared/home/home-hero";
 import { PopularServices } from "@/components/shared/home/popular-services";
 import { PopularServicesLoading } from "@/components/shared/home/popular-services-loading";
 import { HowFixMateWorks } from "@/components/shared/home/how-fixmate-works";
+import { WhyChooseFixMate } from "@/components/shared/home/why-choose-fixmate";
+import { FeaturedTechnicians } from "@/components/shared/home/featured-technicians";
+import { FeaturedTechniciansLoading } from "@/components/shared/home/featured-technicians-loading";
 
 export const metadata: Metadata = {
 	title: "FixMate | Trusted Repair Services",
@@ -19,6 +22,10 @@ export default function HomePage() {
 				<PopularServices />
 			</Suspense>
 			<HowFixMateWorks />
+			<WhyChooseFixMate />
+			<Suspense fallback={<FeaturedTechniciansLoading />}>
+				<FeaturedTechnicians />
+			</Suspense>
 		</>
 	);
 }
