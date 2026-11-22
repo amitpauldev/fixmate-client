@@ -175,6 +175,7 @@ export default function DashboardLayout({
 						alt=""
 						width={40}
 						height={40}
+						unoptimized
 						priority
 						className="size-10 shrink-0 rounded-xl object-contain"
 					/>
