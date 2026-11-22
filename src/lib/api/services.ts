@@ -20,9 +20,12 @@ export async function getServices(
 	if (params.sort) searchParams.set("sort", params.sort);
 
 	const query = searchParams.toString();
-	const response = await fetch(`${API_URL}/api/services${query ? `?${query}` : ""}`, {
-		cache: "no-store",
-	});
+	const response = await fetch(
+		`${API_URL}/api/services${query ? `?${query}` : ""}`,
+		{
+			cache: "no-store",
+		},
+	);
 
 	if (!response.ok) {
 		throw new Error("Failed to fetch services");

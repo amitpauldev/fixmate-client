@@ -1,9 +1,12 @@
 import { getServices } from "@/lib/api/services";
 import type { Service } from "@/features/services/types/service";
-import { ServicesPageHeader } from "@/components/services-public/services-page-header";
-import { ServicesDirectory } from "@/components/services-public/services-directory";
+import { ServicesPageHeader } from "@/components/shared/services-public/services-page-header";
+import { ServicesDirectory } from "@/components/shared/services-public/services-directory";
 import type { ServiceQueryParams } from "@/lib/api/services";
-import { serviceCategories, serviceModes } from "@/features/services/schemas/service-form";
+import {
+	serviceCategories,
+	serviceModes,
+} from "@/features/services/schemas/service-form";
 
 type ServicesPageProps = {
 	searchParams: Promise<{
@@ -17,7 +20,9 @@ function getScalarParam(value: string | string[] | undefined) {
 	return typeof value === "string" ? value : undefined;
 }
 
-export default async function ServicesPage({ searchParams }: ServicesPageProps) {
+export default async function ServicesPage({
+	searchParams,
+}: ServicesPageProps) {
 	const params = await searchParams;
 	const categoryParam = getScalarParam(params.category);
 	const serviceModeParam = getScalarParam(params.serviceMode);
@@ -44,7 +49,8 @@ export default async function ServicesPage({ searchParams }: ServicesPageProps) 
 		services = await getServices({ category, serviceMode, sort });
 	} catch {
 		services = [];
-		error = "The service directory is temporarily unavailable. Please try again shortly.";
+		error =
+			"The service directory is temporarily unavailable. Please try again shortly.";
 	}
 
 	return (
