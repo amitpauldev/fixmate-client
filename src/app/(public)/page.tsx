@@ -3,6 +3,7 @@ import { Suspense } from "react";
 import { HomeHero } from "@/components/shared/home/home-hero";
 import { PopularServices } from "@/components/shared/home/popular-services";
 import { PopularServicesLoading } from "@/components/shared/home/popular-services-loading";
+import { HowFixMateWorks } from "@/components/shared/home/how-fixmate-works";
 
 export const metadata: Metadata = {
 	title: "FixMate | Trusted Repair Services",
@@ -17,6 +18,7 @@ export default function HomePage() {
 			<Suspense fallback={<PopularServicesLoading />}>
 				<PopularServices />
 			</Suspense>
+			<HowFixMateWorks />
 		</>
 	);
 }
