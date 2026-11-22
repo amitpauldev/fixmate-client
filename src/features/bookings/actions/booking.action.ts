@@ -39,3 +39,38 @@ export async function createBooking(
 		};
 	}
 }
+
+export async function cancelBooking(
+	bookingId: string,
+): Promise<BookingServiceResult> {
+	try {
+		const response = await fetch(
+			`${process.env.NEXT_PUBLIC_API_URL}/api/bookings/${bookingId}/cancel`,
+			{
+				method: "post",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({ bookingId }),
+			},
+		);
+
+		if (!response.ok) {
+			throw new Error(`Failed to cancel booking: ${response.statusText}`);
+		}
+
+		const data = await response.json();
+
+		return {
+			success: true,
+			data: null,
+			message: data.message || "Booking canceled successfully",
+		};
+	} catch (error) {
+		return {
+			success: false,
+			data: null,
+			message: "Failed to cancel booking",
+		};
+	}
+}

@@ -8,9 +8,10 @@ import { createBooking } from "@/features/bookings/actions/booking.action";
 import { BookingFormValues } from "@/features/bookings/types/booking";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import { getBookingsByCustomerId } from "@/lib/api/booking";
 
 type RepairRequestDialogProps = {
-	user?: { name?: string; email?: string; role?: string };
+	user?: { name?: string; email?: string; role?: string; id?: string };
 	open: boolean;
 	onOpenChange: (open: boolean) => void;
 	service: Service;
@@ -42,7 +43,7 @@ export function RepairRequestDialog({
 		const form = event.currentTarget;
 		if (!form.reportValidity()) return;
 
-		if (!user) {
+		if (!user || !user.id) {
 			toast.error("You need to sign in to request a repair.");
 			router.push("/sign-in");
 			return;
@@ -50,6 +51,18 @@ export function RepairRequestDialog({
 
 		if (user.role !== "customer") {
 			toast.error("Only customers can request a repair.");
+			return;
+		}
+
+		const bookings = await getBookingsByCustomerId(user.id);
+
+		const isAlreadyBooked = bookings.filter(
+			(booking) => booking.serviceId === service._id,
+		);
+
+		if (isAlreadyBooked.length > 0) {
+			toast.error("You have already requested this repair.");
+			router.push("/dashboard/customer/bookings");
 			return;
 		}
 
@@ -69,6 +82,8 @@ export function RepairRequestDialog({
 			basePrice: service.basePrice,
 			technicianName: service.technicianName,
 			technicianEmail: service.technicianEmail,
+			technicianId: service.technicianId,
+			customerId: user?.id ?? "",
 		};
 
 		try {

@@ -15,9 +15,7 @@ export function ServicePricingCard({ service }: ServicePricingCardProps) {
 	const [requestOpen, setRequestOpen] = useState(false);
 	const router = useRouter();
 	const { data: session } = authClient.useSession();
-	const user = session?.user as
-		| { name?: string; email?: string; role?: string }
-		| undefined;
+	const user = session?.user;
 
 	const handleRequestOpen = () => {
 		if (!user) {

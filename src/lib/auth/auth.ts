@@ -1,6 +1,7 @@
 import { betterAuth } from "better-auth";
 import { MongoClient, ObjectId } from "mongodb";
 import { mongodbAdapter } from "@better-auth/mongo-adapter";
+import { headers } from "next/headers";
 
 const client = new MongoClient(process.env.MONGODB_URI as string);
 const db = client.db("fix_mate");
@@ -42,6 +43,15 @@ export const auth = betterAuth({
 		},
 	},
 });
+
+// Server-side authentication
+export const authServer = async () => {
+	const session = await auth.api.getSession({
+		headers: await headers(),
+	});
+
+	return session;
+};
 
 export type AuthUserSummary = {
 	id: string;
