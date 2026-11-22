@@ -64,13 +64,14 @@ export function HomeHero() {
 export function HomeHeroVisual() {
 	return (
 		<div className="relative mx-auto w-full max-w-[560px]">
-			<div className="relative aspect-[4/3] overflow-hidden rounded-xl bg-[#F1F4EF]">
+			<div className="relative aspect-[4/3] overflow-hidden rounded-xl bg-[#f0f4ef]">
 				<Image
-					src="/images/hero-person.png"
+					src="/images/Technician-with-Building.png"
 					alt="FixMate technician ready to help with a repair"
 					fill
 					sizes="(max-width: 1024px) 100vw, 52vw"
 					priority
+					unoptimized
 					className="object-contain object-bottom"
 				/>
 			</div>

@@ -26,14 +26,12 @@ const benefits: Benefit[] = [
 	},
 	{
 		title: "Easy Booking",
-		description:
-			"Book your preferred service without unnecessary hassle.",
+		description: "Book your preferred service without unnecessary hassle.",
 		icon: CalendarCheck,
 	},
 	{
 		title: "Save Your Time",
-		description:
-			"Find the services you need in one convenient place.",
+		description: "Find the services you need in one convenient place.",
 		icon: Clock,
 	},
 	{
@@ -91,13 +89,9 @@ export function WhyChooseFixMate() {
 				</motion.div>
 
 				<motion.div
-					initial={
-						reduceMotion ? false : { opacity: 0, x: 18, scale: 0.98 }
-					}
+					initial={reduceMotion ? false : { opacity: 0, x: 18, scale: 0.98 }}
 					whileInView={
-						reduceMotion
-							? undefined
-							: { opacity: 1, x: 0, scale: 1 }
+						reduceMotion ? undefined : { opacity: 1, x: 0, scale: 1 }
 					}
 					viewport={{ once: true, amount: 0.2 }}
 					transition={{ duration: 0.55, ease: "easeOut" }}
@@ -105,11 +99,12 @@ export function WhyChooseFixMate() {
 				>
 					<div className="relative aspect-[4/4.5] overflow-hidden rounded-xl border border-border bg-accent/55 sm:aspect-[5/4] lg:aspect-[4/4.1]">
 						<Image
-							src="/images/hero-person.png"
+							src="/images/Technician-with-Building.png"
 							alt="FixMate technician providing professional home repair help"
 							fill
 							sizes="(max-width: 1024px) 100vw, 52vw"
 							priority={false}
+							unoptimized
 							className="object-contain object-bottom"
 						/>
 					</div>
@@ -149,11 +144,7 @@ type BenefitRowProps = {
 	reduceMotion: boolean;
 };
 
-function BenefitRow({
-	benefit,
-	index,
-	reduceMotion,
-}: BenefitRowProps) {
+function BenefitRow({ benefit, index, reduceMotion }: BenefitRowProps) {
 	const Icon = benefit.icon;
 
 	return (

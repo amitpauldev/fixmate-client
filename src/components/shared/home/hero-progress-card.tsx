@@ -3,11 +3,7 @@
 import { CalendarDays, CircleCheck } from "lucide-react";
 import { motion, useReducedMotion } from "motion/react";
 
-const progressSteps = [
-	"Select Service",
-	"Choose Time",
-	"Get It Fixed",
-];
+const progressSteps = ["Select Service", "Choose Time", "Get It Fixed"];
 
 export function HeroProgressCard() {
 	const reduceMotion = useReducedMotion();

@@ -23,7 +23,7 @@ export function HeroTrustBadge() {
 							},
 						}
 			}
-			className="absolute -bottom-8 left-0 sm:bottom-[3%] sm:left-[4%] z-20 w-[220px] items-center gap-3 rounded-xl border border-border bg-card p-3.5 shadow-lg sm:flex lg:w-[232px]"
+			className="absolute -bottom-8 left-0 sm:bottom-[3%] sm:left-[4%] z-20 w-55 items-center gap-3 rounded-xl border border-border bg-card p-3.5 shadow-lg flex lg:w-58"
 		>
 			<span className="flex size-8 sm:size-10 shrink-0 items-center justify-center rounded-full bg-accent text-secondary">
 				<ShieldCheck className="size-5" aria-hidden="true" />

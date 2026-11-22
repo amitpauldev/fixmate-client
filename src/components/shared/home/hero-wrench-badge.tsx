@@ -10,9 +10,7 @@ export function HeroWrenchBadge() {
 		<motion.div
 			initial={reduceMotion ? false : { opacity: 0, scale: 0.8 }}
 			animate={
-				reduceMotion
-					? undefined
-					: { opacity: 1, scale: 1, y: [0, -4, 0] }
+				reduceMotion ? undefined : { opacity: 1, scale: 1, y: [0, -4, 0] }
 			}
 			transition={
 				reduceMotion

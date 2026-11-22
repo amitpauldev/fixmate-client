@@ -83,14 +83,8 @@ export function AboutContent() {
 					</motion.div>
 
 					<motion.div
-						initial={
-							reduceMotion ? false : { opacity: 0, x: 18, scale: 0.98 }
-						}
-						animate={
-							reduceMotion
-								? undefined
-								: { opacity: 1, x: 0, scale: 1 }
-						}
+						initial={reduceMotion ? false : { opacity: 0, x: 18, scale: 0.98 }}
+						animate={reduceMotion ? undefined : { opacity: 1, x: 0, scale: 1 }}
 						transition={{
 							duration: 0.52,
 							delay: reduceMotion ? 0 : 0.08,
@@ -100,10 +94,11 @@ export function AboutContent() {
 					>
 						<div className="relative aspect-[4/3] overflow-hidden rounded-xl border border-border bg-accent/55">
 							<Image
-								src="/images/hero-person.png"
+								src="/images/Hero-Professional.webp"
 								alt="A FixMate home repair professional"
 								fill
 								sizes="(max-width: 1024px) 100vw, 52vw"
+								unoptimized
 								priority
 								className="object-contain object-bottom"
 							/>
@@ -171,12 +166,8 @@ export function AboutContent() {
 							return (
 								<motion.li
 									key={value.title}
-									initial={
-										reduceMotion ? false : { opacity: 0, y: 14 }
-									}
-									whileInView={
-										reduceMotion ? undefined : { opacity: 1, y: 0 }
-									}
+									initial={reduceMotion ? false : { opacity: 0, y: 14 }}
+									whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
 									viewport={{ once: true, amount: 0.25 }}
 									transition={{
 										duration: 0.38,
@@ -209,10 +200,7 @@ export function AboutContent() {
 				</div>
 			</section>
 
-			<section
-				aria-labelledby="about-final-cta-title"
-				className="bg-card"
-			>
+			<section aria-labelledby="about-final-cta-title" className="bg-card">
 				<div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8 lg:py-24">
 					<motion.div
 						initial={reduceMotion ? false : { opacity: 0, y: 12 }}
