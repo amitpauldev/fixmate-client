@@ -54,6 +54,8 @@ export function RepairRequestDialog({
 			return;
 		}
 
+		const formData = new FormData(event.currentTarget);
+
 		const bookings = await getBookingsByCustomerId(user.id);
 
 		const isAlreadyBooked = bookings.filter(
@@ -61,12 +63,10 @@ export function RepairRequestDialog({
 		);
 
 		if (isAlreadyBooked.length > 0) {
-			toast.error("You have already requested this repair.");
 			router.push("/dashboard/customer/bookings");
+			toast.error("You have already requested this repair.");
 			return;
 		}
-
-		const formData = new FormData(event.currentTarget);
 
 		const requestData: BookingFormValues = {
 			customerName: String(formData.get("customerName") ?? ""),
