@@ -63,7 +63,7 @@ export default async function ServiceDetailsPage({
 				</div>
 
 				<aside className="grid gap-5 lg:sticky lg:top-24">
-					<ServicePricingCard basePrice={service.basePrice} />
+					<ServicePricingCard service={service} />
 					<TechnicianCard
 						name={technicianName}
 						image={technician?.image ?? null}
