@@ -59,7 +59,12 @@ export function RepairRequestDialog({
 		const bookings = await getBookingsByCustomerId(user.id);
 
 		const isAlreadyBooked = bookings.filter(
-			(booking) => booking.serviceId === service._id,
+			(booking) =>
+				booking.serviceId === service._id &&
+				booking.status !== "completed" &&
+				booking.status !== "cancelled" &&
+				booking.status !== "rejected" &&
+				booking.status !== "in-progress",
 		);
 
 		if (isAlreadyBooked.length > 0) {

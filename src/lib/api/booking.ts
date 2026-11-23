@@ -20,3 +20,24 @@ export async function getBookingsByCustomerId(
 		throw error;
 	}
 }
+
+export async function getBookingsByTechnicianId(
+	technicianId: string,
+): Promise<Booking[]> {
+	try {
+		const response = await fetch(
+			`${process.env.NEXT_PUBLIC_API_URL}/api/bookings?technicianId=${technicianId}`,
+			{
+				method: "GET",
+				headers: {
+					"Content-Type": "application/json",
+				},
+			},
+		);
+		const data = await response.json();
+		return data.data;
+	} catch (error) {
+		console.error("Error fetching bookings by technician ID:", error);
+		throw error;
+	}
+}

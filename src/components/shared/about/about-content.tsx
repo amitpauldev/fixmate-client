@@ -94,7 +94,7 @@ export function AboutContent() {
 					>
 						<div className="relative aspect-[4/3] overflow-hidden rounded-xl border border-border bg-accent/55">
 							<Image
-								src="/images/Hero-Professional.webp"
+								src="/images/Technician-with-Building.png"
 								alt="A FixMate home repair professional"
 								fill
 								sizes="(max-width: 1024px) 100vw, 52vw"
