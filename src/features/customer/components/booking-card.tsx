@@ -66,6 +66,8 @@ export function BookingCard({ booking }: BookingCardProps) {
 	};
 
 	const handlePayment = async () => {
+		if (isPaying) return;
+
 		try {
 			setIsPaying(true);
 
@@ -80,9 +82,13 @@ export function BookingCard({ booking }: BookingCardProps) {
 			});
 
 			const result = await response.json();
+			console.log("Checkout API response:", result);
 
 			if (!response.ok) {
 				throw new Error(result.message || "Unable to initiate payment");
+			}
+			if (!result.url) {
+				throw new Error("Stripe Checkout URL was not provided");
 			}
 			toast.success("Redirecting to Stripe Checkout...");
 			window.location.href = result.url;
@@ -199,7 +205,7 @@ export function BookingCard({ booking }: BookingCardProps) {
 								disabled={isPaying}
 								className="mt-4 h-10 w-full rounded-lg bg-brand-accent text-sm font-bold text-brand-accent-foreground transition-colors hover:bg-brand-accent/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
 							>
-								Pay now
+								{isPaying ? "Opening checkout..." : "Pay now"}
 							</button>
 						)}
 				</div>

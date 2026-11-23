@@ -16,6 +16,12 @@ export async function POST(request: NextRequest) {
 				{ status: 401 },
 			);
 		}
+		if (session.user.role !== "customer") {
+			return NextResponse.json(
+				{ success: false, message: "Only customers can make payments." },
+				{ status: 403 },
+			);
+		}
 
 		// 2. Receive booking ID
 		const { bookingId } = await request.json();
