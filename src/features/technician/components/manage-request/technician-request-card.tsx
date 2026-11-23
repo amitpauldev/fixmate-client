@@ -167,7 +167,7 @@ export function TechnicianRequestCard({ booking }: TechnicianRequestCardProps) {
 					</div>
 
 					<p className="mt-4 text-2xl font-bold text-card-foreground">
-						tk.{amount.toFixed(0)}
+						${amount.toFixed(0)}
 					</p>
 
 					{booking.status === "requested" && (
