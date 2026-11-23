@@ -30,7 +30,7 @@ export function CustomerPayments({ payments, error }: CustomerPaymentsProps) {
 
 	return (
 		<div>
-			<h1 className="text-3xl font-bold tracking-tight text-primary">
+			<h1 className="text-3xl font-bold tracking-tight text-foreground">
 				Payment history
 			</h1>
 			<p className="mt-2 text-sm font-medium text-muted-foreground">
@@ -70,10 +70,10 @@ export function CustomerPayments({ payments, error }: CustomerPaymentsProps) {
 										key={payment._id}
 										className="border-b border-border/60 text-sm last:border-b-0"
 									>
-										<td className="px-4 py-3.5 font-bold text-primary">
+										<td className="px-4 py-3.5 font-bold text-foreground">
 											{payment.serviceTitle}
 										</td>
-										<td className="px-4 py-3.5 text-primary">
+										<td className="px-4 py-3.5 text-primary-muted">
 											{payment.technicianName}
 										</td>
 										<td className="px-4 py-3.5 font-bold text-card-foreground">
