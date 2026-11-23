@@ -1,6 +1,7 @@
 import { Booking } from "@/features/bookings/types/booking";
 import { Payment } from "@/features/payments/types/types";
 import { Service } from "@/features/services/types/service";
+import { User } from "@/features/users/types/types";
 
 export async function getAllServices(): Promise<Service[]> {
 	try {
@@ -56,5 +57,21 @@ export async function getAllPayments(): Promise<Payment[]> {
 	} catch (error) {
 		console.error("Error fetching all payments:", error);
 		throw new Error("Failed to fetch all payments.");
+	}
+}
+
+export async function getAllUsers(): Promise<User[]> {
+	try {
+		const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/users`, {
+			cache: "no-store",
+		});
+		const result = await res.json();
+		if (!res.ok) {
+			throw new Error(result.message || "Failed to fetch all users.");
+		}
+		return result.data;
+	} catch (error) {
+		console.error("Error fetching all users:", error);
+		throw new Error("Failed to fetch all users.");
 	}
 }

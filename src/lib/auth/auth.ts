@@ -2,6 +2,7 @@ import { betterAuth } from "better-auth";
 import { MongoClient, ObjectId } from "mongodb";
 import { mongodbAdapter } from "@better-auth/mongo-adapter";
 import { headers } from "next/headers";
+import { admin } from "better-auth/plugins";
 
 const client = new MongoClient(process.env.MONGODB_URI as string);
 const db = client.db("fix_mate");
@@ -14,6 +15,9 @@ export const auth = betterAuth({
 		enabled: true,
 		minPasswordLength: 6,
 	},
+
+	plugins: [admin()],
+
 	user: {
 		additionalFields: {
 			role: {
