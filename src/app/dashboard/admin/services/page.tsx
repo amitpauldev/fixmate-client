@@ -1,5 +1,5 @@
 import { getAllServices } from "@/features/admin/api/admin.api";
-import { ServiceApprovalList } from "@/features/admin/components/service-approval-list";
+import { ServiceApprovalList } from "@/features/admin/components/service-approve/service-approval-list";
 import type { Service } from "@/features/services/types/service";
 
 export default async function AdminServicesPage() {
