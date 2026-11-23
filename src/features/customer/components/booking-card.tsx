@@ -44,6 +44,8 @@ export function BookingCard({ booking }: BookingCardProps) {
 	const [cancelOpen, setCancelOpen] = useState(false);
 	const [cancelling, setCancelling] = useState(false);
 
+	const [isPaying, setIsPaying] = useState(false);
+
 	const handleCancel = async () => {
 		setCancelling(true);
 		try {
@@ -60,6 +62,37 @@ export function BookingCard({ booking }: BookingCardProps) {
 			toast.error("Unable to cancel this booking.");
 		} finally {
 			setCancelling(false);
+		}
+	};
+
+	const handlePayment = async () => {
+		try {
+			setIsPaying(true);
+
+			const response = await fetch("/api/checkout_session", {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({
+					bookingId: booking._id,
+				}),
+			});
+
+			const result = await response.json();
+
+			if (!response.ok) {
+				throw new Error(result.message || "Unable to initiate payment");
+			}
+			toast.success("Redirecting to Stripe Checkout...");
+			window.location.href = result.url;
+		} catch (error) {
+			console.error("Payment error:", error);
+			toast.error(
+				error instanceof Error ? error.message : "Something went wrong",
+			);
+		} finally {
+			setIsPaying(false);
 		}
 	};
 
@@ -162,6 +195,8 @@ export function BookingCard({ booking }: BookingCardProps) {
 						booking.paymentStatus === "unpaid" && (
 							<button
 								type="button"
+								onClick={handlePayment}
+								disabled={isPaying}
 								className="mt-4 h-10 w-full rounded-lg bg-brand-accent text-sm font-bold text-brand-accent-foreground transition-colors hover:bg-brand-accent/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
 							>
 								Pay now
