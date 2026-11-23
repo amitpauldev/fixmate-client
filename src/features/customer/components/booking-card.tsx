@@ -4,8 +4,8 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { Wrench } from "lucide-react";
-import type { Booking, BookingStatus } from "../types/booking";
-import { cancelBooking } from "../actions/booking.action";
+import type { Booking, BookingStatus } from "../../bookings/types/booking";
+import { cancelBooking } from "../../bookings/actions/booking.action";
 import { ConfirmationDialog } from "@/components/ui/confirmation-dialog";
 
 type BookingCardProps = {
@@ -142,7 +142,7 @@ export function BookingCard({ booking }: BookingCardProps) {
 						{booking.status === "completed" ? "Final amount" : "Starting price"}
 					</p>
 					<p className="mt-1 text-2xl font-bold text-card-foreground">
-						$
+						tk.
 						{booking.status === "completed" && booking.finalAmount
 							? booking.finalAmount.toFixed(0)
 							: booking.basePrice.toFixed(0)}

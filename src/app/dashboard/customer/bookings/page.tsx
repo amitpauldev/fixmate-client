@@ -1,7 +1,7 @@
 import type { Booking } from "@/features/bookings/types/booking";
 import { getBookingsByCustomerId } from "@/lib/api/booking";
 import { authServer } from "@/lib/auth/auth";
-import { CustomerBookings } from "@/features/bookings/components/customer-bookings";
+import { CustomerBookings } from "@/features/customer/components/customer-bookings";
 import { notFound } from "next/navigation";
 
 export default async function CustomerBookingsPage() {

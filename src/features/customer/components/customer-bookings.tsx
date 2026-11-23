@@ -1,22 +1,16 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import type { Booking } from "../types/booking";
+import type { Booking } from "../../bookings/types/booking";
 import { BookingCard } from "./booking-card";
-import {
-	BookingStatusTabs,
-	type BookingFilter,
-} from "./booking-status-tabs";
+import { BookingStatusTabs, type BookingFilter } from "./booking-status-tabs";
 
 type CustomerBookingsProps = {
 	bookings: Booking[];
 	error?: string;
 };
 
-export function CustomerBookings({
-	bookings,
-	error,
-}: CustomerBookingsProps) {
+export function CustomerBookings({ bookings, error }: CustomerBookingsProps) {
 	const [activeFilter, setActiveFilter] = useState<BookingFilter>("all");
 
 	const counts = useMemo<Record<BookingFilter, number>>(
@@ -27,12 +21,10 @@ export function CustomerBookings({
 			).length,
 			"to-pay": bookings.filter(
 				(booking) =>
-					booking.status === "completed" &&
-					booking.paymentStatus === "unpaid",
+					booking.status === "completed" && booking.paymentStatus === "unpaid",
 			).length,
-			paid: bookings.filter(
-				(booking) => booking.paymentStatus === "paid",
-			).length,
+			paid: bookings.filter((booking) => booking.paymentStatus === "paid")
+				.length,
 			closed: bookings.filter((booking) =>
 				["cancelled", "rejected"].includes(booking.status),
 			).length,
@@ -53,9 +45,7 @@ export function CustomerBookings({
 						booking.paymentStatus === "unpaid",
 				);
 			case "paid":
-				return bookings.filter(
-					(booking) => booking.paymentStatus === "paid",
-				);
+				return bookings.filter((booking) => booking.paymentStatus === "paid");
 			case "closed":
 				return bookings.filter((booking) =>
 					["cancelled", "rejected"].includes(booking.status),

@@ -103,7 +103,7 @@ export function CompletionDialog({
 					className="mt-2 h-11 w-full rounded-lg border border-input bg-card px-3 text-sm text-card-foreground outline-none focus:border-ring focus:ring-2 focus:ring-ring/20"
 				/>
 				<p className="mt-2 text-xs text-muted-foreground">
-					Starting price was ${startingAmount.toFixed(0)}.
+					Starting price was tk.{startingAmount.toFixed(0)}.
 				</p>
 
 				<div className="mt-6 flex justify-end gap-2">
