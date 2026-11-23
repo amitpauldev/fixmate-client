@@ -15,12 +15,18 @@ type TechnicianRequestCardProps = {
 };
 
 const statusStyles: Record<BookingStatus, string> = {
-	requested: "border-status-requested/25 bg-status-requested/10 text-status-requested",
-	accepted: "border-status-accepted/25 bg-status-accepted/10 text-status-accepted",
-	rejected: "border-status-rejected/25 bg-status-rejected/10 text-status-rejected",
-	"in-progress": "border-status-progress/25 bg-status-progress/10 text-status-progress",
-	completed: "border-status-completed/25 bg-status-completed/10 text-status-completed",
-	cancelled: "border-status-cancelled/25 bg-status-cancelled/10 text-status-cancelled",
+	requested:
+		"border-status-requested/25 bg-status-requested/10 text-status-requested",
+	accepted:
+		"border-status-accepted/25 bg-status-accepted/10 text-status-accepted",
+	rejected:
+		"border-status-rejected/25 bg-status-rejected/10 text-status-rejected",
+	"in-progress":
+		"border-status-progress/25 bg-status-progress/10 text-status-progress",
+	completed:
+		"border-status-completed/25 bg-status-completed/10 text-status-completed",
+	cancelled:
+		"border-status-cancelled/25 bg-status-cancelled/10 text-status-cancelled",
 };
 
 function formatStatus(status: BookingStatus) {
@@ -57,7 +63,7 @@ export function TechnicianRequestCard({ booking }: TechnicianRequestCardProps) {
 			startTransition(() => router.refresh());
 		} catch {
 			toast.error("Unable to update this booking.");
-	} finally {
+		} finally {
 			setUpdatingId(null);
 		}
 	};
@@ -101,18 +107,28 @@ export function TechnicianRequestCard({ booking }: TechnicianRequestCardProps) {
 						{booking.serviceTitle}
 					</h2>
 					<p className="mt-1 text-sm text-muted-foreground">
-						Requested {formatDate(booking.createdAt)}, preferred {formatDate(booking.preferredDate)}
+						Requested {formatDate(booking.createdAt)}, preferred{" "}
+						{formatDate(booking.preferredDate)}
 					</p>
 
 					<div className="mt-5 grid gap-3 text-sm sm:grid-cols-2">
 						<p className="text-muted-foreground">
-							Customer: <span className="font-semibold text-card-foreground">{booking.customerName}</span>
+							Customer:{" "}
+							<span className="font-semibold text-card-foreground">
+								{booking.customerName}
+							</span>
 						</p>
 						<p className="text-muted-foreground">
-							Phone: <span className="font-semibold text-card-foreground">{booking.customerPhone || "Not provided"}</span>
+							Phone:{" "}
+							<span className="font-semibold text-card-foreground">
+								{booking.customerPhone || "Not provided"}
+							</span>
 						</p>
 						<p className="text-muted-foreground sm:col-span-2">
-							Address: <span className="font-semibold text-card-foreground">{booking.address}</span>
+							Address:{" "}
+							<span className="font-semibold text-card-foreground">
+								{booking.address}
+							</span>
 						</p>
 					</div>
 
@@ -123,46 +139,76 @@ export function TechnicianRequestCard({ booking }: TechnicianRequestCardProps) {
 
 				<div className="border-t border-dashed border-border px-5 py-5 lg:border-l lg:border-t-0">
 					<p className="text-xs text-muted-foreground">
-						Ticket <span className="font-semibold">#{booking._id.slice(-5).toUpperCase()}</span>
+						Ticket{" "}
+						<span className="font-semibold">
+							#{booking._id.slice(-5).toUpperCase()}
+						</span>
 					</p>
 
 					<div className="mt-2 flex flex-wrap gap-2">
-						<span className={`inline-flex h-6 items-center rounded-full border px-2.5 text-xs font-bold ${statusStyles[booking.status]}`}>
+						<span
+							className={`inline-flex h-6 items-center rounded-full border px-2.5 text-xs font-bold ${statusStyles[booking.status]}`}
+						>
 							<span className="mr-1.5 size-1.5 rounded-full bg-current" />
 							{formatStatus(booking.status)}
 						</span>
-						{(booking.status === "completed" || booking.status === "accepted") && (
-							<span className={`inline-flex h-6 items-center rounded-full border px-2.5 text-xs font-bold ${
-								booking.paymentStatus === "paid"
-									? "border-status-completed/25 bg-status-completed/10 text-status-completed"
-									: "border-border bg-muted text-muted-foreground"
-							}`}>
+						{(booking.status === "completed" ||
+							booking.status === "accepted") && (
+							<span
+								className={`inline-flex h-6 items-center rounded-full border px-2.5 text-xs font-bold ${
+									booking.paymentStatus === "paid"
+										? "border-status-completed/25 bg-status-completed/10 text-status-completed"
+										: "border-border bg-muted text-muted-foreground"
+								}`}
+							>
 								{booking.paymentStatus === "paid" ? "Paid" : "Unpaid"}
 							</span>
 						)}
 					</div>
 
-					<p className="mt-4 text-2xl font-bold text-card-foreground">${amount.toFixed(0)}</p>
+					<p className="mt-4 text-2xl font-bold text-card-foreground">
+						tk.{amount.toFixed(0)}
+					</p>
 
 					{booking.status === "requested" && (
 						<div className="mt-4 grid grid-cols-2 gap-2">
-							<button type="button" disabled={updating} onClick={() => updateStatus("accepted")} className="h-10 cursor-pointer rounded-lg bg-primary px-3 text-sm font-bold text-primary-foreground transition-colors hover:bg-secondary disabled:opacity-60">
+							<button
+								type="button"
+								disabled={updating}
+								onClick={() => updateStatus("accepted")}
+								className="h-10 cursor-pointer rounded-lg bg-primary px-3 text-sm font-bold text-primary-foreground transition-colors hover:bg-secondary disabled:opacity-60"
+							>
 								{updating ? "Saving..." : "Accept"}
 							</button>
-							<button type="button" disabled={updating} onClick={() => updateStatus("rejected")} className="h-10 cursor-pointer rounded-lg border border-border px-3 text-sm font-bold text-card-foreground transition-colors hover:bg-accent disabled:opacity-60">
+							<button
+								type="button"
+								disabled={updating}
+								onClick={() => updateStatus("rejected")}
+								className="h-10 cursor-pointer rounded-lg border border-border px-3 text-sm font-bold text-card-foreground transition-colors hover:bg-accent disabled:opacity-60"
+							>
 								Reject
 							</button>
 						</div>
 					)}
 
 					{booking.status === "accepted" && (
-						<button type="button" disabled={updating} onClick={() => updateStatus("in-progress")} className="mt-4 h-10 w-full cursor-pointer rounded-lg bg-primary px-3 text-sm font-bold text-primary-foreground transition-colors hover:bg-secondary disabled:opacity-60">
+						<button
+							type="button"
+							disabled={updating}
+							onClick={() => updateStatus("in-progress")}
+							className="mt-4 h-10 w-full cursor-pointer rounded-lg bg-primary px-3 text-sm font-bold text-primary-foreground transition-colors hover:bg-secondary disabled:opacity-60"
+						>
 							{updating ? "Saving..." : "Start work"}
 						</button>
 					)}
 
 					{booking.status === "in-progress" && (
-						<button type="button" disabled={updating} onClick={() => setCompletionOpen(true)} className="mt-4 h-10 w-full cursor-pointer rounded-lg bg-[#ed6818] px-3 text-sm font-bold text-white transition-colors hover:bg-[#d85b11] disabled:opacity-60">
+						<button
+							type="button"
+							disabled={updating}
+							onClick={() => setCompletionOpen(true)}
+							className="mt-4 h-10 w-full cursor-pointer rounded-lg bg-[#ed6818] px-3 text-sm font-bold text-white transition-colors hover:bg-[#d85b11] disabled:opacity-60"
+						>
 							Mark completed
 						</button>
 					)}

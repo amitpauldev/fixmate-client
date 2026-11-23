@@ -79,13 +79,19 @@ export function CompletionDialog({
 					</button>
 				</div>
 
-				<p id={descriptionId} className="mt-3 text-sm leading-6 text-muted-foreground">
-					Set the final price for <span className="font-semibold text-card-foreground">{serviceTitle}</span>.
-					The customer pays this amount.
+				<p
+					id={descriptionId}
+					className="mt-3 text-sm leading-6 text-muted-foreground"
+				>
+					Set the final price for{" "}
+					<span className="font-semibold text-card-foreground">
+						{serviceTitle}
+					</span>
+					. The customer pays this amount.
 				</p>
 
 				<label className="mt-5 block text-sm font-bold" htmlFor="final-amount">
-					Final amount (USD)
+					Final amount (BDT)
 				</label>
 				<input
 					id="final-amount"
@@ -112,7 +118,9 @@ export function CompletionDialog({
 					<button
 						type="button"
 						onClick={handleConfirm}
-						disabled={submitting || !Number.isFinite(finalAmount) || finalAmount < 0}
+						disabled={
+							submitting || !Number.isFinite(finalAmount) || finalAmount < 0
+						}
 						className="h-10 cursor-pointer rounded-lg bg-[#ed6818] px-4 text-sm font-bold text-white transition-colors hover:bg-[#d85b11] disabled:cursor-not-allowed disabled:opacity-60"
 					>
 						{submitting ? "Saving..." : "Mark completed"}
