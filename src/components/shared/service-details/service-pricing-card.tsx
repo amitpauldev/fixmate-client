@@ -39,7 +39,7 @@ export function ServicePricingCard({ service }: ServicePricingCardProps) {
 					Starting price
 				</p>
 				<p className="mt-1 text-4xl font-bold tracking-tight text-card-foreground">
-					tk. {service.basePrice.toFixed(0)}
+					$ {service.basePrice.toFixed(0)}
 				</p>
 				<p className="mt-3 text-sm leading-6 text-muted-foreground">
 					The technician confirms the final price when the job is done. You pay

@@ -69,7 +69,7 @@ export function ServiceCard({ service }: ServiceCardProps) {
 							Starting price
 						</p>
 						<p className="mt-1 text-xl font-bold text-card-foreground">
-							tk. {service.basePrice.toFixed(2)}
+							$ {service.basePrice.toFixed(2)}
 						</p>
 					</div>
 					<div className="max-w-[45%] text-right">

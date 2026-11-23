@@ -1,17 +1,11 @@
 "use client";
 
 import { motion, useReducedMotion } from "motion/react";
-import type { Service } from "@/features/services/types/service";
-import type { AuthUserSummary } from "@/lib/auth/auth";
+import type { User } from "@/features/users/types/types";
 import { FeaturedTechnicianCard } from "./featured-technician-card";
 
-export type FeaturedTechnician = {
-	service: Service;
-	technician: AuthUserSummary | null;
-};
-
 type FeaturedTechniciansGridProps = {
-	technicians: FeaturedTechnician[];
+	technicians: User[];
 };
 
 export function FeaturedTechniciansGrid({
@@ -23,7 +17,7 @@ export function FeaturedTechniciansGrid({
 		<div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
 			{technicians.map((item, index) => (
 				<motion.div
-					key={item.service.technicianId}
+					key={item._id}
 					initial={reduceMotion ? false : { opacity: 0, y: 16 }}
 					whileInView={
 						reduceMotion ? undefined : { opacity: 1, y: 0 }
@@ -37,8 +31,7 @@ export function FeaturedTechniciansGrid({
 					className="h-full"
 				>
 					<FeaturedTechnicianCard
-						service={item.service}
-						technician={item.technician}
+						technician={item}
 					/>
 				</motion.div>
 			))}

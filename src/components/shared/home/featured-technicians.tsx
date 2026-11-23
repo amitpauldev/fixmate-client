@@ -1,49 +1,22 @@
 import Link from "next/link";
 import { ArrowRight, UsersRound } from "lucide-react";
-import { getServices } from "@/lib/api/services";
-import { getAuthUserById } from "@/lib/auth/auth";
-import type { Service } from "@/features/services/types/service";
-import {
-	FeaturedTechniciansGrid,
-	type FeaturedTechnician,
-} from "./featured-technicians-grid";
-
-async function loadFeaturedTechnicians(): Promise<FeaturedTechnician[]> {
-	const services = await getServices({ sort: "newest" });
-	const seenTechnicianIds = new Set<string>();
-	const featuredServices: Service[] = [];
-
-	for (const service of services) {
-		if (!service.isAvailable || service.approvalStatus !== "approved") continue;
-		if (seenTechnicianIds.has(service.technicianId)) continue;
-
-		seenTechnicianIds.add(service.technicianId);
-		featuredServices.push(service);
-		if (featuredServices.length === 4) break;
-	}
-
-	return Promise.all(
-		featuredServices.map(async (service) => {
-			let technician = null;
-			try {
-				technician = await getAuthUserById(service.technicianId);
-			} catch {
-				technician = null;
-			}
-			return { service, technician };
-		}),
-	);
-}
+import { FeaturedTechniciansGrid } from "./featured-technicians-grid";
+import { getAllTechnican } from "@/features/technician/api/technician";
 
 export async function FeaturedTechnicians() {
-	let technicians: FeaturedTechnician[] = [];
+	let technicians: Awaited<ReturnType<typeof getAllTechnican>> = [];
 	let unavailable = false;
 
 	try {
-		technicians = await loadFeaturedTechnicians();
+		technicians = await getAllTechnican();
 	} catch {
+		technicians = [];
 		unavailable = true;
 	}
+
+	technicians = technicians
+		.filter((technician) => technician.role === "technician")
+		.slice(0, 4);
 
 	return (
 		<section
