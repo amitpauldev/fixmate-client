@@ -1,17 +1,36 @@
 import { NextRequest, NextResponse } from "next/server";
-import { headers } from "next/headers";
 import { auth } from "@/lib/auth/auth";
 
 export async function proxy(request: NextRequest) {
 	const session = await auth.api.getSession({
-		headers: await headers(),
+		headers: request.headers,
 	});
+
+	const pathname = request.nextUrl.pathname;
+
+	// Prevent logged-in users from accessing sign-in/sign-up
+	if (pathname === "/sign-in" || pathname === "/sign-up") {
+		if (session) {
+			const role = session.user.appRole;
+
+			const dashboardPath = {
+				admin: "/dashboard/admin",
+				technician: "/dashboard/technician",
+				customer: "/dashboard/customer",
+			}[role];
+
+			if (dashboardPath) {
+				return NextResponse.redirect(new URL(dashboardPath, request.url));
+			}
+		}
+
+		return NextResponse.next();
+	}
 
 	if (!session) {
 		return NextResponse.redirect(new URL("/sign-in", request.url));
 	}
 
-	const pathname = request.nextUrl.pathname;
 	const appRole = session.user.appRole;
 
 	// Admin routes
@@ -39,5 +58,5 @@ export async function proxy(request: NextRequest) {
 }
 
 export const config = {
-	matcher: ["/dashboard/:path*"],
+	matcher: ["/dashboard/:path*", "/sign-in", "/sign-up"],
 };

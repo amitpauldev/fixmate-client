@@ -317,6 +317,7 @@ export default function DashboardLayout({
 											alt="User profile"
 											width={40}
 											height={40}
+											unoptimized
 											className="rounded-full *:object-cover"
 										/>
 									</div>
