@@ -53,7 +53,7 @@ export function PopularServiceCard({ service }: PopularServiceCardProps) {
 								Starting price
 							</p>
 							<p className="mt-1 text-lg font-bold text-card-foreground">
-								tk. {service.basePrice.toFixed(2)}
+								$ {service.basePrice.toFixed(2)}
 							</p>
 						</div>
 						<span className="flex size-10 items-center justify-center rounded-full bg-accent text-accent-foreground transition-colors group-hover:bg-primary group-hover:text-primary-foreground">

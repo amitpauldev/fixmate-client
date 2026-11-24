@@ -75,14 +75,8 @@ export function SignInForm({ callbackUrl }: SignInFormProps) {
 				return;
 			}
 
-			const role = data ? data.user.appRole : undefined;
-			const fallback =
-				role === "admin"
-					? "/dashboard/admin"
-					: role === "technician"
-						? "/dashboard/technician"
-						: "/dashboard/customer";
-			const destination = getSafeCallbackUrl(callbackUrl) || fallback;
+			const destination =
+				getSafeCallbackUrl(callbackUrl) || "/dashboard/profile";
 
 			toast.success("Signed in successfully.");
 			router.push(destination);

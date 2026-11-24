@@ -181,7 +181,7 @@ export function BookingCard({ booking }: BookingCardProps) {
 						{booking.status === "completed" ? "Final amount" : "Starting price"}
 					</p>
 					<p className="mt-1 text-2xl font-bold text-card-foreground">
-						tk.
+						$
 						{booking.status === "completed" && booking.finalAmount
 							? booking.finalAmount.toFixed(0)
 							: booking.basePrice.toFixed(0)}

@@ -71,11 +71,7 @@ export function SignUpForm() {
 			}
 
 			toast.success("Account created successfully.");
-			router.push(
-				safeRole === "technician"
-					? "/dashboard/technician"
-					: "/dashboard/customer",
-			);
+			router.push("/dashboard/profile");
 			router.refresh();
 		} catch {
 			toast.error("Unable to create your account. Please try again.");
