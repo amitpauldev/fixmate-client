@@ -6,7 +6,7 @@ import { TechnicianRequestList } from "@/features/technician/components/manage-r
 
 export default async function TechnicianRequestsPage() {
 	const session = await authServer();
-	if (session?.user?.role !== "technician") {
+	if (session?.user?.appRole !== "technician") {
 		return redirect("/dashboard");
 	}
 

@@ -16,10 +16,7 @@ function formatAmount(amount: number, currency = "USD") {
 
 export function RecentRevenuePanel({ payments }: RecentRevenuePanelProps) {
 	const recentPayments = [...payments]
-		.sort(
-			(a, b) =>
-				new Date(b.paidAt).getTime() - new Date(a.paidAt).getTime(),
-		)
+		.sort((a, b) => new Date(b.paidAt).getTime() - new Date(a.paidAt).getTime())
 		.slice(0, 4);
 
 	return (
@@ -50,9 +47,9 @@ export function RecentRevenuePanel({ payments }: RecentRevenuePanelProps) {
 					{recentPayments.map((payment) => (
 						<div
 							key={payment._id}
-							className="flex items-center justify-between gap-4 border-b border-border/60 py-3 last:border-b-0"
+							className="flex flex-col sm:flex-row items-start justify-between gap-4 border-b border-border/60 py-3 last:border-b-0"
 						>
-							<div className="min-w-0">
+							<div className="min-w-0 flex-1">
 								<p className="truncate text-sm font-bold text-card-foreground">
 									{payment.serviceTitle}
 								</p>

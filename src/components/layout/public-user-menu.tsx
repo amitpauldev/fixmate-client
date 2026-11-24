@@ -7,11 +7,12 @@ import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { authClient } from "@/lib/auth/auth-client";
 import { ConfirmationDialog } from "@/components/ui/confirmation-dialog";
+import Image from "next/image";
 
 type SessionUser = {
 	name?: string;
 	email?: string;
-	role?: string;
+	appRole?: string;
 };
 
 function getInitials(name?: string) {
@@ -94,7 +95,7 @@ export function PublicUserMenu() {
 	}
 
 	const user = session.user as SessionUser;
-	const dashboardPath = getDashboardPath(user.role);
+	const dashboardPath = getDashboardPath(user.appRole);
 
 	const handleSignOut = async () => {
 		if (signingOut) return;
@@ -114,7 +115,7 @@ export function PublicUserMenu() {
 	};
 
 	return (
-		<div ref={menuRef} className="relative hidden md:block">
+		<div ref={menuRef} className="relative md:block">
 			<button
 				type="button"
 				aria-label="Open account menu"
@@ -123,9 +124,22 @@ export function PublicUserMenu() {
 				onClick={() => setOpen((current) => !current)}
 				className="flex items-center gap-2 rounded-full py-1 pl-1 pr-2 text-foreground outline-none transition-colors hover:bg-accent focus-visible:ring-2 focus-visible:ring-ring"
 			>
-				<span className="flex size-11 items-center justify-center rounded-full bg-primary text-sm font-bold text-primary-foreground shadow-sm">
-					{getInitials(user.name)}
-				</span>
+				{session?.user.image ? (
+					<div className="relative h-10 w-10 overflow-hidden rounded-full border border-border bg-card">
+						<Image
+							src={session.user.image}
+							alt="User profile"
+							unoptimized
+							width={40}
+							height={40}
+							className="rounded-full *:object-cover"
+						/>
+					</div>
+				) : (
+					<span className="flex size-10 items-center justify-center rounded-full bg-primary text-sm font-bold text-primary-foreground shadow-sm">
+						{getInitials(session?.user.name)}
+					</span>
+				)}
 				<ChevronDown
 					className={`size-4 text-muted-foreground transition-transform ${open ? "rotate-180" : ""}`}
 					aria-hidden="true"
@@ -146,7 +160,7 @@ export function PublicUserMenu() {
 							{user.email}
 						</p>
 						<span className="mt-3 inline-flex rounded-full bg-accent px-3 py-1 text-xs font-bold text-accent-foreground">
-							{getRoleLabel(user.role)}
+							{getRoleLabel(user.appRole)}
 						</span>
 					</div>
 

@@ -18,3 +18,22 @@ export async function getAllTechnican(): Promise<User[]> {
 		throw new Error("Failed to fetch all services.");
 	}
 }
+
+export async function getTechnicianById(technicianId: string): Promise<User> {
+	try {
+		const res = await fetch(
+			`${process.env.NEXT_PUBLIC_API_URL}/api/users/${technicianId}`,
+			{
+				cache: "no-store",
+			},
+		);
+		const result = await res.json();
+		if (!res.ok) {
+			throw new Error(result.message || "Failed to fetch technician.");
+		}
+		return result.data;
+	} catch (error) {
+		console.error("Error fetching technician:", error);
+		throw new Error("Failed to fetch technician.");
+	}
+}

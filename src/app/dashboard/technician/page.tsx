@@ -22,7 +22,7 @@ export default async function TechnicianDashboardPage() {
 		);
 	}
 
-	if (session?.user.role !== "technician") {
+	if (session?.user.appRole !== "technician") {
 		return notFound();
 	}
 

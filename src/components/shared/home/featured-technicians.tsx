@@ -15,7 +15,7 @@ export async function FeaturedTechnicians() {
 	}
 
 	technicians = technicians
-		.filter((technician) => technician.role === "technician")
+		.filter((technician) => technician.appRole === "technician")
 		.slice(0, 4);
 
 	return (

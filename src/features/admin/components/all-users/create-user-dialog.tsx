@@ -4,6 +4,7 @@ import { useEffect, useId, useRef, useState } from "react";
 import { UserPlus, X } from "lucide-react";
 import toast from "react-hot-toast";
 import { authClient } from "@/lib/auth/auth-client";
+import type { FormEvent } from "react";
 
 type CreateUserDialogProps = {
 	open: boolean;
@@ -39,7 +40,7 @@ export function CreateUserDialog({
 		if (!creating) onOpenChange(false);
 	};
 
-	const handleCreate = async (event: React.FormEvent<HTMLFormElement>) => {
+	const handleCreate = async (event: FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 		if (creating) return;
 
@@ -49,9 +50,10 @@ export function CreateUserDialog({
 				name: name.trim(),
 				email: email.trim().toLowerCase(),
 				password,
-				role: role as "admin" | "user",
+				role: role === "admin" ? "admin" : "user",
+				// custom fields
 				data: {
-					role,
+					appRole: role,
 					phone: phone.trim(),
 					area: area.trim(),
 				},

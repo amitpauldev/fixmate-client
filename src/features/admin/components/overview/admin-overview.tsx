@@ -39,8 +39,8 @@ export function AdminOverview({
 	payments,
 	error,
 }: AdminOverviewProps) {
-	const technicians = users.filter((user) => user.role === "technician");
-	const customers = users.filter((user) => user.role === "customer");
+	const technicians = users.filter((user) => user.appRole === "technician");
+	const customers = users.filter((user) => user.appRole === "customer");
 	const pendingServices = services.filter(
 		(service) => service.approvalStatus === "pending",
 	);
@@ -72,7 +72,7 @@ export function AdminOverview({
 				</div>
 			) : (
 				<>
-					<div className="mt-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+					<div className="mt-6 grid gap-4 grid-cols-1 sm:grid-cols-2 xl:grid-cols-4">
 						<OverviewStatCard
 							label="Total users"
 							value={users.length}

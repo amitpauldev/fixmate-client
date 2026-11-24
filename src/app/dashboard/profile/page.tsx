@@ -10,7 +10,7 @@ type ProfileUser = {
 	id?: string;
 	name?: string;
 	email?: string;
-	role?: string;
+	appRole?: string;
 	image?: string | null;
 	phone?: string;
 	area?: string;
@@ -28,9 +28,9 @@ function getInitials(name?: string) {
 		.join("");
 }
 
-function getRoleLabel(role?: string) {
-	if (role === "technician") return "Technician";
-	if (role === "admin") return "Admin";
+function getRoleLabel(appRole?: string) {
+	if (appRole === "technician") return "Technician";
+	if (appRole === "admin") return "Admin";
 	return "Customer";
 }
 
@@ -233,7 +233,7 @@ function ProfileForm({ user }: { user: ProfileUser }) {
 					<ProfileField
 						id="profile-role"
 						label="Role"
-						value={getRoleLabel(user.role)}
+						value={getRoleLabel(user.appRole)}
 						readOnly
 					/>
 					<div className="sm:col-span-2">

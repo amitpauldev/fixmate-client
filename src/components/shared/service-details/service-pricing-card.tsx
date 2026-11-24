@@ -25,7 +25,7 @@ export function ServicePricingCard({ service }: ServicePricingCardProps) {
 			);
 			return;
 		}
-		if (user.role !== "customer") {
+		if (user.appRole !== "customer") {
 			toast.error("Only customers can request a repair.");
 			return;
 		}

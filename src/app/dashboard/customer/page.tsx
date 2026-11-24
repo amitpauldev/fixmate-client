@@ -20,7 +20,7 @@ export default async function CustomerDashboardPage() {
 		);
 	}
 
-	if (session?.user.role !== "customer") {
+	if (session?.user.appRole !== "customer") {
 		return notFound();
 	}
 
@@ -35,9 +35,7 @@ export default async function CustomerDashboardPage() {
 		]);
 	} catch (error) {
 		errorMessage =
-			error instanceof Error
-				? error.message
-				: "Unable to load your dashboard.";
+			error instanceof Error ? error.message : "Unable to load your dashboard.";
 	}
 
 	return (

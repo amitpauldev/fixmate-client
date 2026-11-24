@@ -36,7 +36,7 @@ type DashboardMenuItem = {
 };
 
 type SessionUser = {
-	role?: string;
+	appRole?: string;
 };
 
 const menuItems: Record<DashboardRole, DashboardMenuItem[]> = {
@@ -105,8 +105,8 @@ export function getInitials(name?: string) {
 		.join("");
 }
 
-function getDashboardRole(role?: string): DashboardRole {
-	if (role === "technician" || role === "admin") return role;
+function getDashboardRole(appRole?: string): DashboardRole {
+	if (appRole === "technician" || appRole === "admin") return appRole;
 	return "customer";
 }
 
@@ -135,10 +135,10 @@ export default function DashboardLayout({
 	const [signOutOpen, setSignOutOpen] = useState(false);
 	const [signingOut, setSigningOut] = useState(false);
 
-	const role = getDashboardRole(
-		(session?.user as SessionUser | undefined)?.role,
+	const appRole = getDashboardRole(
+		(session?.user as SessionUser | undefined)?.appRole,
 	);
-	const items = isPending ? menuItems.customer : menuItems[role];
+	const items = isPending ? menuItems.customer : menuItems[appRole];
 
 	const handleSignOut = async () => {
 		if (signingOut) return;
@@ -307,7 +307,7 @@ export default function DashboardLayout({
 						</div>
 						<div className="flex items-center gap-3">
 							<span className="text-sm font-medium text-muted-foreground">
-								{session?.user.role}
+								{session?.user.appRole}
 							</span>
 							<Link href="/dashboard/profile">
 								{session?.user.image ? (

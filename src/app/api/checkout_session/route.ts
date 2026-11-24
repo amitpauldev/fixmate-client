@@ -16,7 +16,7 @@ export async function POST(request: NextRequest) {
 				{ status: 401 },
 			);
 		}
-		if (session.user.role !== "customer") {
+		if (session.user.appRole !== "customer") {
 			return NextResponse.json(
 				{ success: false, message: "Only customers can make payments." },
 				{ status: 403 },

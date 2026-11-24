@@ -1,11 +1,12 @@
 import { getServiceById } from "@/lib/api/services";
-import { getAuthUserById } from "@/lib/auth/auth";
 import { notFound } from "next/navigation";
 import { ServiceDetailsBreadcrumb } from "@/components/shared/service-details/service-details-breadcrumb";
 import { ServiceHero } from "@/components/shared/service-details/service-hero";
 import { ServicePricingCard } from "@/components/shared/service-details/service-pricing-card";
 import { TechnicianCard } from "@/components/shared/service-details/technician-card";
 import { ServiceFacts } from "@/components/shared/service-details/service-facts";
+import { getTechnicianById } from "@/features/technician/api/technician";
+import { User } from "@/features/users/types/types";
 
 export default async function ServiceDetailsPage({
 	params,
@@ -26,10 +27,10 @@ export default async function ServiceDetailsPage({
 		notFound();
 	}
 
-	let technician: Awaited<ReturnType<typeof getAuthUserById>> = null;
+	let technician: User | null = null;
 
 	try {
-		technician = await getAuthUserById(service.technicianId);
+		technician = await getTechnicianById(service.technicianId);
 	} catch {
 		technician = null;
 	}

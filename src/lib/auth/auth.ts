@@ -20,7 +20,7 @@ export const auth = betterAuth({
 
 	user: {
 		additionalFields: {
-			role: {
+			appRole: {
 				type: "string",
 				defaultValue: "customer",
 				input: true,
@@ -51,15 +51,15 @@ export const auth = betterAuth({
 		user: {
 			create: {
 				before: async (user) => {
-					const role =
-						user.role === "customer" || user.role === "technician"
-							? user.role
+					const appRole =
+						user.appRole === "technician" || user.appRole === "admin"
+							? user.appRole
 							: "customer";
 
 					return {
 						data: {
 							...user,
-							role,
+							appRole,
 						},
 					};
 				},
@@ -76,27 +76,3 @@ export const authServer = async () => {
 
 	return session;
 };
-
-export type AuthUserSummary = {
-	id: string;
-	name: string;
-	image: string | null;
-};
-
-export async function getAuthUserById(
-	id: string,
-): Promise<AuthUserSummary | null> {
-	if (!id) return null;
-
-	const user = await db.collection("user").findOne({
-		$or: [{ _id: new ObjectId(id) }, { id }],
-	});
-
-	if (!user) return null;
-
-	return {
-		id: typeof user.id === "string" ? user.id : String(user._id),
-		name: typeof user.name === "string" ? user.name : "FixMate technician",
-		image: typeof user.image === "string" ? user.image : null,
-	};
-}

@@ -23,31 +23,33 @@ export function PublicNavbar() {
 				aria-label="Primary navigation"
 				className="relative mx-auto flex h-18 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8"
 			>
-				<Link
-					href="/"
-					aria-label="FixMate home"
-					className="group flex items-center gap-2.5 rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-				>
-					<Image
-						src="/images/logo.png"
-						alt=""
-						width={44}
-						height={44}
-						priority
-						unoptimized
-						className="size-11 rounded-xl object-contain"
-					/>
-					<span className="text-xl font-bold tracking-tight text-foreground">
-						Fix<span className="text-secondary">Mate</span>
-					</span>
-				</Link>
+				<div className="flex items-center gap-2">
+					<PublicMobileNav items={publicNavItems} />
+					<Link
+						href="/"
+						aria-label="FixMate home"
+						className="group flex items-center gap-2.5 rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+					>
+						<Image
+							src="/images/logo.png"
+							alt=""
+							width={44}
+							height={44}
+							priority
+							unoptimized
+							className="size-11 rounded-xl object-contain"
+						/>
+						<span className="text-xl font-bold tracking-tight text-foreground">
+							Fix<span className="text-secondary">Mate</span>
+						</span>
+					</Link>
+				</div>
 
 				<PublicNavLinks items={publicNavItems} />
 
 				<div className="flex items-center gap-2">
 					<ThemeToggle />
 					<PublicUserMenu />
-					<PublicMobileNav items={publicNavItems} />
 				</div>
 			</nav>
 		</header>

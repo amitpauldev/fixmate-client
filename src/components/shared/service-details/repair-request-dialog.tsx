@@ -11,7 +11,7 @@ import { useRouter } from "next/navigation";
 import { getBookingsByCustomerId } from "@/lib/api/booking";
 
 type RepairRequestDialogProps = {
-	user?: { name?: string; email?: string; role?: string; id?: string };
+	user?: { name?: string; email?: string; appRole?: string; id?: string };
 	open: boolean;
 	onOpenChange: (open: boolean) => void;
 	service: Service;
@@ -49,7 +49,7 @@ export function RepairRequestDialog({
 			return;
 		}
 
-		if (user.role !== "customer") {
+		if (user.appRole !== "customer") {
 			toast.error("Only customers can request a repair.");
 			return;
 		}

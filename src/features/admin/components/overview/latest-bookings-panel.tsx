@@ -55,9 +55,7 @@ export function LatestBookingsPanel({ bookings }: LatestBookingsPanelProps) {
 						className="size-6 text-muted-foreground"
 						aria-hidden="true"
 					/>
-					<p className="mt-2 text-sm text-muted-foreground">
-						No bookings yet
-					</p>
+					<p className="mt-2 text-sm text-muted-foreground">No bookings yet</p>
 				</div>
 			) : (
 				<div className="mt-4 grid">
@@ -65,16 +63,18 @@ export function LatestBookingsPanel({ bookings }: LatestBookingsPanelProps) {
 						<Link
 							key={booking._id}
 							href="/dashboard/admin/bookings"
-							className="flex items-start justify-between gap-4 border-b border-border/60 py-3 last:border-b-0"
+							className="flex flex-col sm:flex-row items-start justify-between gap-3 border-b border-border/60 py-3 last:border-b-0"
 						>
-							<div className="min-w-0">
+							<div className="min-w-0 flex-1">
 								<p className="truncate text-sm font-bold text-card-foreground">
 									{booking.serviceTitle}
 								</p>
+
 								<p className="mt-1 truncate text-xs text-muted-foreground">
 									{booking.customerName} with {booking.technicianName}
 								</p>
 							</div>
+
 							<span
 								className={`inline-flex shrink-0 items-center rounded-full border px-2.5 py-1 text-xs font-bold ${statusStyles[booking.status]}`}
 							>

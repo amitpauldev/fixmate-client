@@ -18,7 +18,7 @@ export default async function CustomerBookingsPage() {
 		);
 	}
 
-	if (session?.user?.role !== "customer") {
+	if (session?.user?.appRole !== "customer") {
 		return notFound();
 	}
 

@@ -5,7 +5,8 @@ export type User = {
 	emailVerified: boolean;
 	createdAt: string;
 	updatedAt: string;
-	role: "customer" | "technician" | "admin";
+	role: "user" | "admin";
+	appRole: "customer" | "technician" | "admin";
 	area?: string;
 	bio?: string;
 	image?: string;

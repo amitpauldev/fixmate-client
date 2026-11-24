@@ -7,6 +7,7 @@ import toast from "react-hot-toast";
 import type { User } from "@/features/users/types/types";
 import { authClient } from "@/lib/auth/auth-client";
 import { CreateUserDialog } from "./create-user-dialog";
+import { updateUserRole } from "@/features/users/actions/users.action";
 
 type AllUsersProps = {
 	users: User[];
@@ -14,7 +15,7 @@ type AllUsersProps = {
 	currentUserId: string;
 };
 
-type UserRole = User["role"];
+type UserRole = User["appRole"];
 type UserFilter = "all" | UserRole;
 
 const filters: Array<{ value: UserFilter; label: string }> = [
@@ -44,11 +45,7 @@ function getInitials(name: string) {
 		.join("");
 }
 
-export function AllUsers({
-	users,
-	error,
-	currentUserId,
-}: AllUsersProps) {
+export function AllUsers({ users, error, currentUserId }: AllUsersProps) {
 	const router = useRouter();
 	const [activeFilter, setActiveFilter] = useState<UserFilter>("all");
 	const [search, setSearch] = useState("");
@@ -58,9 +55,9 @@ export function AllUsers({
 	const counts = useMemo<Record<UserFilter, number>>(
 		() => ({
 			all: users.length,
-			customer: users.filter((user) => user.role === "customer").length,
-			technician: users.filter((user) => user.role === "technician").length,
-			admin: users.filter((user) => user.role === "admin").length,
+			customer: users.filter((user) => user.appRole === "customer").length,
+			technician: users.filter((user) => user.appRole === "technician").length,
+			admin: users.filter((user) => user.appRole === "admin").length,
 		}),
 		[users],
 	);
@@ -69,9 +66,7 @@ export function AllUsers({
 		const query = search.trim().toLowerCase();
 
 		return [...users]
-			.filter(
-				(user) => activeFilter === "all" || user.role === activeFilter,
-			)
+			.filter((user) => activeFilter === "all" || user.appRole === activeFilter)
 			.filter((user) => {
 				if (!query) return true;
 				return [user.name, user.email, user.area, user.phone]
@@ -92,12 +87,11 @@ export function AllUsers({
 
 		setUpdatingId(user._id);
 		try {
-			const result = await authClient.admin.setRole({
-				userId: user._id,
-				role: role as "admin" | "user",
-			});
+			const result = await updateUserRole(user._id, role);
 
-			if (result.error) throw new Error(result.error.message);
+			if (!result.success) {
+				throw new Error(result.message);
+			}
 
 			toast.success(`${user.name}'s role updated.`);
 			router.refresh();
@@ -158,7 +152,8 @@ export function AllUsers({
 												: "text-muted-foreground hover:bg-accent hover:text-accent-foreground"
 										}`}
 									>
-										{filter.label} <span className="ml-1">{counts[filter.value]}</span>
+										{filter.label}{" "}
+										<span className="ml-1">{counts[filter.value]}</span>
 									</button>
 								);
 							})}
@@ -245,7 +240,7 @@ export function AllUsers({
 													<td className="px-5 py-4 text-right">
 														<select
 															aria-label={`Role for ${user.name}`}
-															value={user.role}
+															value={user.appRole}
 															disabled={isCurrentUser || updating}
 															onChange={(event) =>
 																handleRoleChange(
@@ -299,16 +294,20 @@ export function AllUsers({
 													</p>
 												</div>
 												<div>
-													<p className="text-xs text-muted-foreground">Joined</p>
+													<p className="text-xs text-muted-foreground">
+														Joined
+													</p>
 													<p className="mt-1 text-sm text-card-foreground">
 														{formatDate(user.createdAt)}
 													</p>
 												</div>
 												<label className="col-span-2">
-													<span className="text-xs text-muted-foreground">Role</span>
+													<span className="text-xs text-muted-foreground">
+														Role
+													</span>
 													<select
 														aria-label={`Role for ${user.name}`}
-														value={user.role}
+														value={user.appRole}
 														disabled={isCurrentUser || updating}
 														onChange={(event) =>
 															handleRoleChange(
